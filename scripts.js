@@ -89,3 +89,12 @@ function setupLogoInput() {
       }
   });
 }
+
+document.addEventListener("DOMContentLoaded", function () {
+  const zoomOutButton = document.getElementById('zoom-out-button');
+  let scale = 1;
+  zoomOutButton.addEventListener('click', function() {
+    scale -= 0.1; // decrement scale by 10% on each click
+    document.body.style.transform = `scale(${scale})`;
+  });
+});
