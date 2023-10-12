@@ -1,100 +1,53 @@
 
-document.addEventListener("DOMContentLoaded", function () {
-  loadFromLocalStorage();
-  renderPlayers();
-});
-
-function loadFromLocalStorage() {
-
-  populateTeamList('.home-player-list', storedHomeTeam);
-  populateTeamList('.away-player-list', storedAwayTeam);
+body {
+  font-family: 'Arial', sans-serif;
+  font-size: 20pt;
+  background-color: #333;
 }
 
-function populateTeamList(selector, playerData) {
-  const teamList = document.querySelector(selector);
-  teamList.innerHTML = "";
-
-  playerData.forEach(player => {
-      const listItem = document.createElement("li");
-      listItem.textContent = `${player.number}. ${player.name}`;
-      listItem.contentEditable = "true";
-      teamList.appendChild(listItem);
-  });
+.blackboard {
+  background-color: #222;
+  width: 90%;
+  max-width: 1000px;
+  padding: 20px;
+  margin: 50px auto;
+  border: 5px solid #8B4513; /* Simulate wooden border */
+  overflow: auto;
 }
 
-function renderPlayers() {
-
-  homeTeamNames.forEach((name, index) => {
-      const dropdown = document.createElement('select');
-      const defaultOption = document.createElement('option');
-      defaultOption.textContent = `${index + 1}. Select Player`;
-      defaultOption.value = '';
-      dropdown.appendChild(defaultOption);
-
-      homeTeamNames.forEach(playerName => {
-          const option = document.createElement('option');
-          option.textContent = playerName;
-          option.value = playerName;
-          dropdown.appendChild(option);
-      });
-
-      const listItem = document.createElement('li');
-      listItem.textContent = `${index + 1}. `;
-      listItem.appendChild(dropdown);
-      document.querySelector('.home-player-list').appendChild(listItem);
-  });
-
-  for (let i = 0; i < 17; i++) {
-      const listItem = document.createElement('li');
-      listItem.textContent = `${i + 1}. `;
-      listItem.contentEditable = "true";
-      document.querySelector('.away-player-list').appendChild(listItem);
-  }
+.team {
+  width: 50%;
+  float: left;
+  padding: 10px;
+  box-sizing: border-box;
 }
 
-
-  const homePlayers = Array.from(document.querySelectorAll('.home-player-list li')).map(li => {
-      const parts = li.textContent.split('. ');
-      return {
-          number: parts[0],
-          name: parts[1]
-      };
-  });
-
-  const awayPlayers = Array.from(document.querySelectorAll('.away-player-list li')).map(li => {
-      const parts = li.textContent.split('. ');
-      return {
-          number: parts[0],
-          name: parts[1]
-      };
-  });
-
-document.addEventListener("DOMContentLoaded", function () {
-  setupLogoInput();
-});
-
-function setupLogoInput() {
-  const logoInput = document.querySelector('#awayTeamLogoUrl');
-  const logoImg = document.querySelector('#awayTeamLogoImg');
-
-  logoInput.addEventListener('change', function() {
-      if (logoInput.value) {
-          logoImg.src = logoInput.value;
-          logoImg.onload = function() {
-              logoInput.style.display = 'none';
-          };
-      } else {
-          logoInput.style.display = 'block';
-          logoImg.src = '';
-      }
-  });
+.team h2 {
+  text-align: center;
+  color: white;
 }
 
-//document.addEventListener("DOMContentLoaded", function () {
-//  const zoomOutButton = document.getElementById('zoom-out-button');
-//  let scale = 1;
-//  zoomOutButton.addEventListener('click', function() {
-//    scale -= 0.1; // decrement scale by 10% on each click
-//    document.body.style.transform = `scale(${scale})`;
-//  });
-//});
+.team-logo {
+  display: block;
+  width: 100px;
+  height: 100px;
+  margin: 10px auto;
+}
+
+.team-name,
+.logo-url {
+  width: 80%;
+  margin: 10px auto;
+  display: block;
+  padding: 5px;
+}
+
+.player-list {
+  list-style-type: none;
+  padding: 0;
+}
+
+.player-list li {
+  margin: 5px 0;
+  color: white;
+}
