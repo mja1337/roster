@@ -1,53 +1,161 @@
 
-body {
-  font-family: 'Arial', sans-serif;
-  font-size: 20pt;
-  background-color: #333;
+document.addEventListener("DOMContentLoaded", function () {
+  loadFromLocalStorage();
+  renderPlayers();
+});
+
+function loadFromLocalStorage() {
+
+  populateTeamList('.home-player-list', storedHomeTeam);
+  populateTeamList('.away-player-list', storedAwayTeam);
 }
 
-.blackboard {
-  background-color: #222;
-  width: 90%;
-  max-width: 1000px;
-  padding: 20px;
-  margin: 50px auto;
-  border: 5px solid #8B4513; /* Simulate wooden border */
-  overflow: auto;
+function populateTeamList(selector, playerData) {
+  const teamList = document.querySelector(selector);
+  teamList.innerHTML = "";
+
+  playerData.forEach(player => {
+      const listItem = document.createElement("li");
+      listItem.textContent = `${player.number}. ${player.name}`;
+      listItem.contentEditable = "true";
+      teamList.appendChild(listItem);
+  });
 }
 
-.team {
-  width: 50%;
-  float: left;
-  padding: 10px;
-  box-sizing: border-box;
+function renderPlayers() {
+
+  homeTeamNames.forEach((name, index) => {
+      const dropdown = document.createElement('select');
+      const defaultOption = document.createElement('option');
+      defaultOption.textContent = `${index + 1}. Select Player`;
+      defaultOption.value = '';
+      dropdown.appendChild(defaultOption);
+
+      homeTeamNames.forEach(playerName => {
+          const option = document.createElement('option');
+          option.textContent = playerName;
+          option.value = playerName;
+          dropdown.appendChild(option);
+      });
+
+      const listItem = document.createElement('li');
+      listItem.textContent = `${index + 1}. `;
+      listItem.appendChild(dropdown);
+      document.querySelector('.home-player-list').appendChild(listItem);
+  });
+
+  for (let i = 0; i < 17; i++) {
+      const listItem = document.createElement('li');
+      listItem.textContent = `${i + 1}. `;
+      listItem.contentEditable = "true";
+      document.querySelector('.away-player-list').appendChild(listItem);
+  }
 }
 
-.team h2 {
-  text-align: center;
-  color: white;
+
+  const homePlayers = Array.from(document.querySelectorAll('.home-player-list li')).map(li => {
+      const parts = li.textContent.split('. ');
+      return {
+          number: parts[0],
+          name: parts[1]
+      };
+  });
+
+  const awayPlayers = Array.from(document.querySelectorAll('.away-player-list li')).map(li => {
+      const parts = li.textContent.split('. ');
+      return {
+          number: parts[0],
+          name: parts[1]
+      };
+  });
+
+document.addEventListener("DOMContentLoaded", function () {
+  setupLogoInput();
+});
+
+function setupLogoInput() {
+  const logoInput = document.querySelector('#awayTeamLogoUrl');
+  const logoImg = document.querySelector('#awayTeamLogoImg');
+
+  logoInput.addEventListener('change', function() {
+      if (logoInput.value) {
+          logoImg.src = logoInput.value;
+          logoImg.onload = function() {
+              logoInput.style.display = 'none';
+          };
+      } else {
+          logoInput.style.display = 'block';
+          logoImg.src = '';
+      }
+  });
 }
 
-.team-logo {
-  display: block;
-  width: 100px;
-  height: 100px;
-  margin: 10px auto;
+//document.addEventListener("DOMContentLoaded", function () {
+//  const zoomOutButton = document.getElementById('zoom-out-button');
+//  let scale = 1;
+//  zoomOutButton.addEventListener('click', function() {
+//    scale -= 0.1; // decrement scale by 10% on each click
+//    document.body.style.transform = `scale(${scale})`;
+//  });
+//});
+
+document.addEventListener("DOMContentLoaded", function () {
+    setupLogoInput();
+    setupPlayerSelect();
+    setupLogoDoubleClick();
+});
+
+function setupLogoDoubleClick() {
+    const homeLogo = document.querySelector('.home-team .team-logo');
+    const playerSelect = document.querySelector('#home-player-select');
+
+    // Initially hide the select dropdown
+    playerSelect.style.display = 'none';
+
+    homeLogo.addEventListener('dblclick', function() {
+        // Toggle visibility of the select dropdown on double click of the home logo
+        playerSelect.style.display = (playerSelect.style.display === 'none') ? 'block' : 'none';
+    });
 }
 
-.team-name,
-.logo-url {
-  width: 80%;
-  margin: 10px auto;
-  display: block;
-  padding: 5px;
+function setupPlayerSelect() {
+    const playerSelect = document.querySelector('#home-player-select');
+    const playerList = document.querySelector('.home-player-list');
+
+    playerSelect.addEventListener('change', function() {
+        for (let li of playerList.querySelectorAll('li')) {
+            const textContent = li.textContent.trim();
+            if (textContent.match(/^\d+\.\s*$/)) {
+                li.textContent = textContent + ' ' + playerSelect.value;
+                break;
+            }
+        }
+        // Reset the select element to the default option and hide it
+        playerSelect.value = "";
+        playerSelect.style.display = 'none';
+    });
 }
 
-.player-list {
-  list-style-type: none;
-  padding: 0;
-}
+document.addEventListener("DOMContentLoaded", function () {
+    setupLogoInput();
+    setupPlayerSelect();
+});
 
-.player-list li {
-  margin: 5px 0;
-  color: white;
+function setupPlayerSelect() {
+    const playerSelect = document.querySelector('#home-player-select');
+    const playerList = document.querySelector('.home-player-list');
+
+    playerSelect.addEventListener('change', function() {
+        // Find the next available slot in the player list
+        for (let li of playerList.querySelectorAll('li')) {
+            const textContent = li.textContent.trim();
+            // If the list item is empty (only contains a number and a dot), insert the player name
+            if (textContent.match(/^\d+\.\s*$/)) {
+                li.textContent = textContent + ' ' + playerSelect.value;
+                break; // Exit the loop once the player name is inserted
+            }
+        }
+        // Reset the select element to the default option
+        playerSelect.value = "";
+    });
 }
