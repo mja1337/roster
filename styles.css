@@ -1,7 +1,7 @@
 
 body {
   font-family: 'Arial', sans-serif;
-  font-size: 16pt;
+  font-size: 20pt;
   background-color: #333;
 }
 
@@ -40,16 +40,6 @@ body {
   margin: 10px auto;
   display: block;
   padding: 5px;
-}
-
-#save-button {
-  display: block;
-  margin: 20px auto;
-  padding: 10px 20px;
-  background-color: #4CAF50;
-  color: white;
-  border: none;
-  cursor: pointer;
 }
 
 .player-list {
