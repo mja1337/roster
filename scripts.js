@@ -9,8 +9,11 @@ function setupLogoDoubleClick() {
     const controls = document.querySelector('.controls');
 
     homeLogo.addEventListener('dblclick', function() {
+        console.log('Double-click detected.'); // Log message to indicate the event is captured
+        console.log('Current display value:', controls.style.display); // Log the current display value
         // Toggle visibility of the entire controls container on double click of the home logo
         controls.style.display = (controls.style.display === 'none' || controls.style.display === '') ? 'block' : 'none';
+        console.log('Updated display value:', controls.style.display); // Log the updated display value
     });
 
     // Refresh button reloads the page
