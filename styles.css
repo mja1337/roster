@@ -51,3 +51,20 @@ body {
   margin: 5px 0;
   color: white;
 }
+
+.controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+#home-player-select {
+    flex-grow: 1; /* This will make the dropdown take as much space as available */
+    margin-right: 10px; /* Space between dropdown and button */
+}
+
+#refresh-button {
+    margin-left: 10px; /* Alternatively, you could give space from this side */
+    /* Other styles as per your design */
+}
