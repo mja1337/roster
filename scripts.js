@@ -6,18 +6,18 @@ document.addEventListener("DOMContentLoaded", function () {
 
 function setupLogoDoubleClick() {
     const homeLogo = document.querySelector('.home-team .team-logo');
-    const playerSelect = document.querySelector('#home-player-select');
-    const refreshButton = document.querySelector('#refresh-button');
+    const controls = document.querySelector('.controls'); // Select the entire controls container
 
-    playerSelect.style.display = 'none';
-    refreshButton.style.display = 'none';
+    // Initially hide the entire controls container
+    controls.style.display = 'none';
 
     homeLogo.addEventListener('dblclick', function() {
-        playerSelect.style.display = (playerSelect.style.display === 'none') ? 'block' : 'none';
-        refreshButton.style.display = (refreshButton.style.display === 'none') ? 'block' : 'none';
+        // Toggle visibility of the entire controls container on double click of the home logo
+        controls.style.display = (controls.style.display === 'none') ? 'block' : 'none';
     });
 
-    refreshButton.addEventListener('click', function() {
+    // Refresh button reloads the page
+    document.querySelector('#refresh-button').addEventListener('click', function() {
         location.reload();
     });
 }
