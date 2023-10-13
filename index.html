@@ -12,7 +12,8 @@
 <div class="team home-team">
 <img alt="Home Team Logo" class="team-logo" src="https://images.squarespace-cdn.com/content/v1/619758344d16e93725c39d0a/b60879b9-e503-4231-b6a6-61d6b4951bd8/RBFC+-+Dark.png?format=100w"/>
 <h2>Real Bedford</h2>
-<select id="home-player-select" class="player-select">
+<div class ="controls">	
+<select id="home-player-select" class="player-select" style="display: none;">
     <option value="" disabled selected>Select a player</option>
     <option value="Tyler McGregor">Tyler McGregor</option>
     <option value="Eddie Corbit">Eddie Corbit</option>
@@ -36,6 +37,7 @@
     <!-- Add more player options as needed -->
 </select>
 <button id="refresh-button" style="display: none;">Refresh/Reset</button>
+</div>
 <ul class="player-list home-player-list">
   <li contenteditable="true" spellcheck="false">1. </li>
   <li contenteditable="true" spellcheck="false">2. </li>
