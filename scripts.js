@@ -2,7 +2,6 @@ document.addEventListener("DOMContentLoaded", function () {
     setupLogoInput();
     setupPlayerSelect();
     setupLogoDoubleClick();
-    renderPlayers();
 });
 
 function setupLogoDoubleClick() {
@@ -55,21 +54,4 @@ function setupLogoInput() {
             logoImg.src = '';
         }
     });
-}
-function renderPlayers() {
-    // Render home team player list items (assuming select dropdown is used for player selection)
-    for (let i = 0; i < 17; i++) {
-        const listItem = document.createElement('li');
-        listItem.textContent = `${i + 1}. `;
-        listItem.contentEditable = "true";
-        document.querySelector('.home-player-list').appendChild(listItem);
-    }
-
-    // Render away team player list items
-    for (let i = 0; i < 17; i++) {
-        const listItem = document.createElement('li');
-        listItem.textContent = `${i + 1}. `;
-        listItem.contentEditable = "true";
-        document.querySelector('.away-player-list').appendChild(listItem);
-    }
 }
