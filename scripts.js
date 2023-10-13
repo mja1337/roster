@@ -6,14 +6,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
 function setupLogoDoubleClick() {
     const homeLogo = document.querySelector('.home-team .team-logo');
-    const controls = document.querySelector('.controls'); // Select the entire controls container
-
-    // Initially hide the entire controls container
-    controls.style.display = 'none';
+    const controls = document.querySelector('.controls');
 
     homeLogo.addEventListener('dblclick', function() {
         // Toggle visibility of the entire controls container on double click of the home logo
-        controls.style.display = (controls.style.display === 'none') ? 'block' : 'none';
+        controls.style.display = block;
     });
 
     // Refresh button reloads the page
