@@ -10,7 +10,7 @@ function setupLogoDoubleClick() {
 
     homeLogo.addEventListener('dblclick', function() {
         // Toggle visibility of the entire controls container on double click of the home logo
-        controls.style.display = block;
+        controls.style.display = 'block';
     });
 
     // Refresh button reloads the page
