@@ -1,3 +1,8 @@
+//Disable spellcheck
+document.querySelectorAll('[contenteditable]').forEach(function(element) {
+    element.setAttribute('spellcheck', 'false');
+});
+
 document.addEventListener("DOMContentLoaded", function () {
     setupLogoInput();
     setupPlayerSelect();
