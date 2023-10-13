@@ -36,7 +36,7 @@ function setupPlayerSelect() {
             }
         }
         playerSelect.value = "";
-        playerSelect.style.display = 'none';
+        //playerSelect.style.display = 'none';
     });
 }
 
@@ -58,19 +58,19 @@ function setupLogoInput() {
 }
 function renderPlayers() {
 
-  homeTeamNames.forEach((name, index) => {
-      const dropdown = document.createElement('select');
-      const defaultOption = document.createElement('option');
-      defaultOption.textContent = `${index + 1}. Select Player`;
-      defaultOption.value = '';
-      dropdown.appendChild(defaultOption);
+ // homeTeamNames.forEach((name, index) => {
+ //     const dropdown = document.createElement('select');
+ //     const defaultOption = document.createElement('option');
+ //     defaultOption.textContent = `${index + 1}. Select Player`;
+ //     defaultOption.value = '';
+ //     dropdown.appendChild(defaultOption);
 
-      homeTeamNames.forEach(playerName => {
-          const option = document.createElement('option');
-          option.textContent = playerName;
-          option.value = playerName;
-          dropdown.appendChild(option);
-      });
+ //     homeTeamNames.forEach(playerName => {
+ //         const option = document.createElement('option');
+ //         option.textContent = playerName;
+ //         option.value = playerName;
+ //         dropdown.appendChild(option);
+ //     });
 
       const listItem = document.createElement('li');
       listItem.textContent = `${index + 1}. `;
