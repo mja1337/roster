@@ -6,12 +6,12 @@ body {
 }
 
 .blackboard {
-  background-color: #222;
+  background-color: #000000;
   width: 90%;
   max-width: 1000px;
   padding: 20px;
   margin: 50px auto;
-  border: 5px solid #8B4513; /* Simulate wooden border */
+  border: 5px solid #F7931A; /* Simulate wooden border */
   overflow: auto;
 }
 
