@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="https://images.squarespace-cdn.com/content/v1/619758344d16e93725c39d0a/fd45bb84-8340-4010-bbde-66f31c1ca075/favicon.ico?format=100w" type="image/x-icon">
+    <title>RBFC Roster Update</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: black;
+            color: white;
+        }
+        h1, h2, h3 {
+            color: white;
+        }
+        input, select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+            background-color: #333;
+            color: white;
+            border: 1px solid #555;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #F7931A;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        .team-section {
+            margin-bottom: 20px;
+            background-color: #4D4D4D;
+            padding: 20px;
+            border-radius: 5px;
+        }
+        .player-item {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            margin-bottom: 10px;
+            background-color: #222;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .player-item input[type="text"],
+        .player-item input[type="number"] {
+            flex: 1;
+            min-width: 120px;
+            margin-right: 10px;
+        }
+        .player-item label {
+            display: flex;
+            align-items: center;
+            margin-right: 10px;
+            white-space: nowrap;
+        }
+        .player-item input[type="checkbox"] {
+            width: auto;
+            margin-right: 5px;
+        }
+        .player-item button {
+            width: auto;
+            padding: 5px 10px;
+        }
+        .player-inputs {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .player-inputs input[type="text"],
+        .player-inputs input[type="number"] {
+            flex: 1;
+            min-width: 120px;
+            margin-right: 10px;
+        }
+        .player-inputs label {
+            display: flex;
+            align-items: center;
+            margin-right: 10px;
+            white-space: nowrap;
+        }
+        .player-inputs input[type="checkbox"] {
+            width: auto;
+            margin-right: 5px;
+        }
+        #saveButton {
+            background-color: #4CAF50; /* Green color */
+        }
+    </style>
+</head>
+<body>
+    <h1>RBFC Roster Update</h1>
+    
+    <div class="team-section">
+        <h2>Home Team</h2>
+        <input type="text" id="homeTeamName" placeholder="Home Team Name">
+        <input type="text" id="homeTeamLogo" placeholder="Home Team Logo URL">
+        
+        <h3>Players</h3>
+        <div class="player-inputs">
+            <input type="text" id="homePlayerNameInput" placeholder="Enter player name">
+            <input type="number" id="homePlayerNumberInput" placeholder="Enter player number">
+            <label>
+                <input type="checkbox" id="homePlayerSubstituteInput">
+                Substitute
+            </label>
+        </div>
+        <button id="homeAddPlayer">Add Player</button>
+        
+        <h3>Current Roster</h3>
+        <div id="homePlayerList"></div>
+    </div>
+    
+    <div class="team-section">
+        <h2>Away Team</h2>
+        <input type="text" id="awayTeamName" placeholder="Away Team Name">
+        <input type="text" id="awayTeamLogo" placeholder="Away Team Logo URL">
+        
+        <h3>Players</h3>
+        <div class="player-inputs">
+            <input type="text" id="awayPlayerNameInput" placeholder="Enter player name">
+            <input type="number" id="awayPlayerNumberInput" placeholder="Enter player number">
+            <label>
+                <input type="checkbox" id="awayPlayerSubstituteInput">
+                Substitute
+            </label>
+        </div>
+        <button id="awayAddPlayer">Add Player</button>
+        
+        <h3>Current Roster</h3>
+        <div id="awayPlayerList"></div>
+    </div>
+    
+    <button id="saveButton">Save Roster</button>
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="update.js"></script>
+</body>
+</html>
