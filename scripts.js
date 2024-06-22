@@ -2,7 +2,6 @@ const BIN_ID = '66768e2ead19ca34f87cdcdb';
 
 document.addEventListener("DOMContentLoaded", function () {
     fetchRosterData();
-    setupEventListeners();
 });
 
 function fetchRosterData() {
@@ -24,7 +23,6 @@ function populateTeam(teamData, teamType) {
     logoImg.src = teamData.logo;
     teamName.textContent = teamData.name;
 
-    //playerList.innerHTML = '<h3>Players</h3>';
     substituteList.innerHTML = '<h3 style="color: white;">Substitutes</h3>';
 
     teamData.players.forEach((player) => {
@@ -34,32 +32,6 @@ function populateTeam(teamData, teamType) {
             substituteList.appendChild(li);
         } else {
             playerList.appendChild(li);
-        }
-    });
-
-    if (teamType === 'home') {
-        populatePlayerSelect(teamData.players);
-    }
-}
-
-function populatePlayerSelect(players) {
-    const playerSelect = document.getElementById('home-player-select');
-    playerSelect.innerHTML = '<option value="" disabled selected>Select a player</option>';
-    players.forEach(player => {
-        if (player.name) {
-            const option = document.createElement('option');
-            option.value = player.number;
-            option.textContent = `${player.number}. ${player.name}${player.substitute ? ' (Substitute)' : ''}`;
-            playerSelect.appendChild(option);
-        }
-    });
-}
-
-function setupEventListeners() {
-    document.getElementById('refresh-button').addEventListener('click', fetchRosterData);
-    document.getElementById('home-player-select').addEventListener('change', function(e) {
-        if (e.target.value) {
-            alert(`Selected player: ${e.target.options[e.target.selectedIndex].text}`);
         }
     });
 }
