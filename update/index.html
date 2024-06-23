@@ -95,6 +95,45 @@
         #saveButton {
             background-color: #4CAF50; /* Green color */
         }
+        #resetAwayTeam {
+            background-color: #f44336; /* Red color */
+            margin-bottom: 10px;
+        }
+        .player-name-input {
+            display: flex;
+            gap: 10px;
+        }
+        .player-name-input input,
+        .player-name-input select {
+            flex: 1;
+        }
+        .team-input {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        .team-input input,
+        .team-input select {
+            flex: 1;
+        }
+        .error {
+            border: 2px solid red !important;
+        }
+        #resetHomePlayers, #resetAwayTeam {
+            background-color: #f44336; /* Red color */
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+        input[type="text"].player-number {
+            width: 50px; 
+        }
+        .team-logo {
+            width: 100px;
+            height: 100px;
+            margin: 10px auto;
+            display: block;
+            object-fit: contain;
+        }
     </style>
 </head>
 <body>
@@ -102,13 +141,20 @@
     
     <div class="team-section">
         <h2>Home Team</h2>
+        <img id="homeTeamLogoImage" class="team-logo" alt="Home Team Logo">
         <input type="text" id="homeTeamName" placeholder="Home Team Name">
         <input type="text" id="homeTeamLogo" placeholder="Home Team Logo URL">
+        <button id="resetHomePlayers">Reset Players</button>
         
         <h3>Players</h3>
         <div class="player-inputs">
-            <input type="text" id="homePlayerNameInput" placeholder="Enter player name">
-            <input type="number" id="homePlayerNumberInput" placeholder="Enter player number">
+            <div class="player-name-input">
+                <select id="homePlayerNameSelect">
+                    <option value="">-- Select player --</option>
+                </select>
+                <input type="text" id="homePlayerNameInput" placeholder="Enter player name">    
+            </div>
+            <input type="text" id="homePlayerNumberInput" placeholder="Enter player number">
             <label>
                 <input type="checkbox" id="homePlayerSubstituteInput">
                 Substitute
@@ -122,13 +168,20 @@
     
     <div class="team-section">
         <h2>Away Team</h2>
-        <input type="text" id="awayTeamName" placeholder="Away Team Name">
+        <img id="awayTeamLogoImage" class="team-logo" alt="Away Team Logo">
+        <div class="team-input">
+            <select id="awayTeamSelect">
+                <option value="">-- Select away team --</option>
+            </select>
+            <input type="text" id="awayTeamName" placeholder="Away Team Name">
+        </div>
         <input type="text" id="awayTeamLogo" placeholder="Away Team Logo URL">
+        <button id="resetAwayTeam">Reset Away Team</button>
         
         <h3>Players</h3>
         <div class="player-inputs">
             <input type="text" id="awayPlayerNameInput" placeholder="Enter player name">
-            <input type="number" id="awayPlayerNumberInput" placeholder="Enter player number">
+            <input type="text" id="awayPlayerNumberInput" placeholder="Enter player number">
             <label>
                 <input type="checkbox" id="awayPlayerSubstituteInput">
                 Substitute
@@ -138,6 +191,7 @@
         
         <h3>Current Roster</h3>
         <div id="awayPlayerList"></div>
+        
     </div>
     
     <button id="saveButton">Save Roster</button>
