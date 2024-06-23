@@ -25,8 +25,35 @@ function populateFields(data) {
     document.getElementById('awayTeamName').value = data.awayTeam.name;
     document.getElementById('awayTeamLogo').value = data.awayTeam.logo;
 
+    updateLogoDisplay('home');
+    updateLogoDisplay('away');
+
     populatePlayerList('home', data.homeTeam.players);
     populatePlayerList('away', data.awayTeam.players);
+    populateHomePlayerDropdown(data.homeTeam.playerPool);
+    populateAwayTeamDropdown(data.awayTeamPool);
+}
+
+function populateHomePlayerDropdown(playerPool) {
+    const select = document.getElementById('homePlayerNameSelect');
+    select.innerHTML = '<option value="">-- Select player --</option>';
+    playerPool.forEach(player => {
+        const option = document.createElement('option');
+        option.value = player;
+        option.textContent = player;
+        select.appendChild(option);
+    });
+}
+
+function populateAwayTeamDropdown(awayTeamPool) {
+    const select = document.getElementById('awayTeamSelect');
+    select.innerHTML = '<option value="">-- Select away team --</option>';
+    awayTeamPool.forEach(team => {
+        const option = document.createElement('option');
+        option.value = JSON.stringify(team);
+        option.textContent = team.name;
+        select.appendChild(option);
+    });
 }
 
 function populatePlayerList(team, players) {
@@ -44,7 +71,7 @@ function addPlayerToList(team, playerName, playerNumber, isSubstitute, index) {
     playerItem.className = 'player-item';
     playerItem.innerHTML = `
         <input type="text" value="${playerName}" data-index="${index}" class="player-name" placeholder="Player name">
-        <input type="number" value="${playerNumber}" data-index="${index}" class="player-number" placeholder="Number">
+        <input type="text" value="${playerNumber}" data-index="${index}" class="player-number" placeholder="Number">
         <label>
             <input type="checkbox" ${isSubstitute ? 'checked' : ''} data-index="${index}" class="player-substitute">
             Substitute
@@ -55,7 +82,14 @@ function addPlayerToList(team, playerName, playerNumber, isSubstitute, index) {
 
     // Add event listeners for editing and deleting
     playerItem.querySelector('.player-name').addEventListener('change', (e) => updatePlayer(team, index, 'name', e.target.value));
-    playerItem.querySelector('.player-number').addEventListener('change', (e) => updatePlayer(team, index, 'number', e.target.value));
+    playerItem.querySelector('.player-number').addEventListener('change', (e) => {
+        if (isValidNumber(e.target.value)) {
+            updatePlayer(team, index, 'number', e.target.value);
+            e.target.classList.remove('error');
+        } else {
+            e.target.classList.add('error');
+        }
+    });
     playerItem.querySelector('.player-substitute').addEventListener('change', (e) => updatePlayer(team, index, 'substitute', e.target.checked));
     playerItem.querySelector('.delete-player').addEventListener('click', () => deletePlayer(team, index));
 }
@@ -96,7 +130,14 @@ function setupEventListeners() {
     document.getElementById('homeAddPlayer').addEventListener('click', () => addPlayer('home'));
     document.getElementById('awayAddPlayer').addEventListener('click', () => addPlayer('away'));
     document.getElementById('saveButton').addEventListener('click', saveRoster);
+    document.getElementById('resetAwayTeam').addEventListener('click', resetAwayTeam);
+    document.getElementById('resetHomePlayers').addEventListener('click', resetHomePlayers);
+    document.getElementById('homePlayerNameSelect').addEventListener('change', updateHomePlayerNameInput);
+    document.getElementById('awayTeamSelect').addEventListener('change', updateAwayTeamFields);
+    document.getElementById('homeTeamLogo').addEventListener('input', () => updateLogoDisplay('home'));
+    document.getElementById('awayTeamLogo').addEventListener('input', () => updateLogoDisplay('away'));
 }
+
 
 function addPlayer(team) {
     const nameInput = document.getElementById(`${team}PlayerNameInput`);
@@ -105,28 +146,88 @@ function addPlayer(team) {
     const playerName = nameInput.value.trim();
     const playerNumber = numberInput.value.trim();
     const isSubstitute = substituteInput.checked;
-    if (playerName && playerNumber) {
+
+    numberInput.classList.remove('error');
+
+    if (playerName && isValidNumber(playerNumber)) {
         const listElement = document.getElementById(`${team}PlayerList`);
         const index = listElement.children.length;
         addPlayerToList(team, playerName, playerNumber, isSubstitute, index);
         nameInput.value = '';
         numberInput.value = '';
         substituteInput.checked = false;
+    } else {
+        if (!isValidNumber(playerNumber)) {
+            numberInput.classList.add('error');
+        }
     }
 }
 
+function resetHomePlayers() {
+    document.getElementById('homePlayerList').innerHTML = '';
+}
+
+function updateHomePlayerNameInput() {
+    const select = document.getElementById('homePlayerNameSelect');
+    const input = document.getElementById('homePlayerNameInput');
+    input.value = select.value;
+}
+
+function updateLogoDisplay(team) {
+    const logoUrl = document.getElementById(`${team}TeamLogo`).value;
+    const logoImg = document.getElementById(`${team}TeamLogoImage`);
+    logoImg.src = logoUrl || 'placeholder.png'; // Use a placeholder image if URL is empty
+    logoImg.style.display = logoUrl ? 'block' : 'none';
+}
+
+function updateAwayTeamFields() {
+    const select = document.getElementById('awayTeamSelect');
+    const nameInput = document.getElementById('awayTeamName');
+    const logoInput = document.getElementById('awayTeamLogo');
+    
+    if (select.value) {
+        const selectedTeam = JSON.parse(select.value);
+        nameInput.value = selectedTeam.name;
+        logoInput.value = selectedTeam.logo;
+        updateLogoDisplay('away');
+    } else {
+        nameInput.value = '';
+        logoInput.value = '';
+        updateLogoDisplay('away');
+    }
+}
+
+function resetAwayTeam() {
+    document.getElementById('awayTeamName').value = '';
+    document.getElementById('awayTeamLogo').value = '';
+    document.getElementById('awayPlayerList').innerHTML = '';
+    document.getElementById('awayTeamSelect').value = '';
+    updateLogoDisplay('away');
+}
+
 function saveRoster() {
+    if (!validatePlayerNumbers()) {
+        alert('Please enter a valid number for all players.');
+        return;
+    }
+
     const rosterData = {
         homeTeam: {
             name: document.getElementById('homeTeamName').value,
             logo: document.getElementById('homeTeamLogo').value,
-            players: getPlayerData('home')
+            players: getPlayerData('home'),
+            playerPool: Array.from(document.getElementById('homePlayerNameSelect').options)
+                .map(option => option.value)
+                .filter(value => value !== '')
         },
         awayTeam: {
             name: document.getElementById('awayTeamName').value,
             logo: document.getElementById('awayTeamLogo').value,
             players: getPlayerData('away')
-        }
+        },
+        awayTeamPool: Array.from(document.getElementById('awayTeamSelect').options)
+            .filter(option => option.value !== '')
+            .map(option => JSON.parse(option.value))
     };
 
     axios.put(`https://api.jsonbin.io/v3/b/${BIN_ID}`, rosterData, {
@@ -142,6 +243,27 @@ function saveRoster() {
         console.error('Error saving data:', error);
         alert('Error saving roster. Please try again.');
     });
+}
+
+function isValidNumber(value) {
+    return value !== '' && !isNaN(value) && parseInt(value) > 0;
+}
+
+function validatePlayerNumbers() {
+    let isValid = true;
+    ['home', 'away'].forEach(team => {
+        const playerItems = document.getElementById(`${team}PlayerList`).getElementsByClassName('player-item');
+        Array.from(playerItems).forEach(item => {
+            const numberInput = item.querySelector('.player-number');
+            if (!isValidNumber(numberInput.value)) {
+                numberInput.classList.add('error');
+                isValid = false;
+            } else {
+                numberInput.classList.remove('error');
+            }
+        });
+    });
+    return isValid;
 }
 
 function getPlayerData(team) {
