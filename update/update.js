@@ -61,11 +61,11 @@ function populatePlayerList(team, players) {
     listElement.innerHTML = '';
 
     players.forEach((player, index) => {
-        addPlayerToList(team, player.name, player.number, player.substitute, index);
+        addPlayerToList(team, player.name, player.number, player.substitute, player.captain, index);
     });
 }
 
-function addPlayerToList(team, playerName, playerNumber, isSubstitute, index) {
+function addPlayerToList(team, playerName, playerNumber, isSubstitute, isCaptain, index) {
     const listElement = document.getElementById(`${team}PlayerList`);
     const playerItem = document.createElement('div');
     playerItem.className = 'player-item';
@@ -75,6 +75,10 @@ function addPlayerToList(team, playerName, playerNumber, isSubstitute, index) {
         <label>
             <input type="checkbox" ${isSubstitute ? 'checked' : ''} data-index="${index}" class="player-substitute">
             Substitute
+        </label>
+        <label>
+            <input type="checkbox" ${isCaptain ? 'checked' : ''} data-index="${index}" class="player-captain">
+            Captain
         </label>
         <button class="delete-player" data-index="${index}">Delete</button>
     `;
@@ -91,6 +95,7 @@ function addPlayerToList(team, playerName, playerNumber, isSubstitute, index) {
         }
     });
     playerItem.querySelector('.player-substitute').addEventListener('change', (e) => updatePlayer(team, index, 'substitute', e.target.checked));
+    playerItem.querySelector('.player-captain').addEventListener('change', (e) => updatePlayer(team, index, 'captain', e.target.checked));
     playerItem.querySelector('.delete-player').addEventListener('click', () => deletePlayer(team, index));
 }
 
@@ -105,6 +110,8 @@ function updatePlayer(team, index, field, value) {
             playerItem.querySelector('.player-number').value = value;
         } else if (field === 'substitute') {
             playerItem.querySelector('.player-substitute').checked = value;
+        } else if (field === 'captain') {
+            playerItem.querySelector('.player-captain').checked = value;
         }
     }
 }
@@ -120,6 +127,7 @@ function deletePlayer(team, index) {
                 item.querySelector('.player-name').dataset.index = newIndex;
                 item.querySelector('.player-number').dataset.index = newIndex;
                 item.querySelector('.player-substitute').dataset.index = newIndex;
+                item.querySelector('.player-captain').dataset.index = newIndex;
                 item.querySelector('.delete-player').dataset.index = newIndex;
             }
         });
@@ -129,7 +137,7 @@ function deletePlayer(team, index) {
 function setupEventListeners() {
     document.getElementById('homeAddPlayer').addEventListener('click', () => addPlayer('home'));
     document.getElementById('awayAddPlayer').addEventListener('click', () => addPlayer('away'));
-    document.getElementById('saveButton').addEventListener('click', saveRoster);
+    document.getElementById('saveButton').addEventListener('click', validateAndSaveRoster);
     document.getElementById('resetAwayTeam').addEventListener('click', resetAwayTeam);
     document.getElementById('resetHomePlayers').addEventListener('click', resetHomePlayers);
     document.getElementById('homePlayerNameSelect').addEventListener('change', updateHomePlayerNameInput);
@@ -138,24 +146,26 @@ function setupEventListeners() {
     document.getElementById('awayTeamLogo').addEventListener('input', () => updateLogoDisplay('away'));
 }
 
-
 function addPlayer(team) {
     const nameInput = document.getElementById(`${team}PlayerNameInput`);
     const numberInput = document.getElementById(`${team}PlayerNumberInput`);
     const substituteInput = document.getElementById(`${team}PlayerSubstituteInput`);
+    const captainInput = document.getElementById(`${team}PlayerCaptainInput`);
     const playerName = nameInput.value.trim();
     const playerNumber = numberInput.value.trim();
     const isSubstitute = substituteInput.checked;
+    const isCaptain = captainInput.checked;
 
     numberInput.classList.remove('error');
 
     if (playerName && isValidNumber(playerNumber)) {
         const listElement = document.getElementById(`${team}PlayerList`);
         const index = listElement.children.length;
-        addPlayerToList(team, playerName, playerNumber, isSubstitute, index);
+        addPlayerToList(team, playerName, playerNumber, isSubstitute, isCaptain, index);
         nameInput.value = '';
         numberInput.value = '';
         substituteInput.checked = false;
+        captainInput.checked = false;
     } else {
         if (!isValidNumber(playerNumber)) {
             numberInput.classList.add('error');
@@ -184,7 +194,7 @@ function updateAwayTeamFields() {
     const select = document.getElementById('awayTeamSelect');
     const nameInput = document.getElementById('awayTeamName');
     const logoInput = document.getElementById('awayTeamLogo');
-    
+
     if (select.value) {
         const selectedTeam = JSON.parse(select.value);
         nameInput.value = selectedTeam.name;
@@ -205,7 +215,9 @@ function resetAwayTeam() {
     updateLogoDisplay('away');
 }
 
-function saveRoster() {
+function saveRoster(event) {
+    event.preventDefault(); // Prevent default form submission
+
     if (!validatePlayerNumbers()) {
         alert('Please enter a valid number for all players.');
         return;
@@ -245,10 +257,6 @@ function saveRoster() {
     });
 }
 
-function isValidNumber(value) {
-    return value !== '' && !isNaN(value) && parseInt(value) > 0;
-}
-
 function validatePlayerNumbers() {
     let isValid = true;
     ['home', 'away'].forEach(team => {
@@ -266,12 +274,44 @@ function validatePlayerNumbers() {
     return isValid;
 }
 
+function isValidNumber(value) {
+    return value !== '' && !isNaN(value) && parseInt(value) > 0;
+}
+
 function getPlayerData(team) {
     const listElement = document.getElementById(`${team}PlayerList`);
     const playerItems = listElement.getElementsByClassName('player-item');
     return Array.from(playerItems).map(item => ({
         name: item.querySelector('.player-name').value,
         number: item.querySelector('.player-number').value,
-        substitute: item.querySelector('.player-substitute').checked
+        substitute: item.querySelector('.player-substitute').checked,
+        captain: item.querySelector('.player-captain').checked
     }));
 }
+
+document.getElementById('saveButton').addEventListener('click', function(event) {
+  let valid = true;
+
+  // Check for multiple captains in the home team
+  const homeCaptains = document.querySelectorAll('#homePlayerList .player-captain:checked');
+  if (homeCaptains.length > 1) {
+    alert('Only one captain can be selected for the Home team.');
+    valid = false;
+  }
+
+  // Check for multiple captains in the away team
+  const awayCaptains = document.querySelectorAll('#awayPlayerList .player-captain:checked');
+  if (awayCaptains.length > 1) {
+    alert('Only one captain can be selected for the Away team.');
+    valid = false;
+  }
+
+  // Prevent saving if validation fails
+  if (!valid) {
+    event.preventDefault();
+    return; // Ensure no further action is taken if not valid
+  }
+
+  // If valid, proceed with saving
+  saveRoster(event);
+});
