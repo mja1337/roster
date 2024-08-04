@@ -10,62 +10,47 @@ body, html {
   background-color: #000000;
   width: 100%;
   height: 100%;
-  max-width: none;
-  max-height: none;
   padding: 2vh;
   margin: 0;
   border: 1vh solid #F7931A;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  overflow: hidden;
+  justify-content: space-between;
+  position: relative;
+  min-height: 100vh;
 }
 
 .teams-container {
   display: flex;
-  flex-direction: row;
-  flex-grow: 1;
-  overflow: auto;
+  justify-content: space-evenly; /* Distribute space evenly */
 }
 
 .team {
-  width: 50%;
-  height: 100%;
-  padding: 1vh;
-  box-sizing: border-box;
   display: flex;
   flex-direction: column;
   align-items: center;
-}
-
-.team h2 {
   text-align: center;
-  color: white;
-  font-size: 3vh;
-  margin: 1vh 0;
 }
 
 .team-logo {
-  width: 10vh;
-  height: 10vh;
-  margin: 1vh auto;
+  width: 50px; /* Fixed width */
+  height: 50px; /* Fixed height */
+  object-fit: contain; /* Ensure the image fits within these bounds */
 }
 
-.player-list {
+.player-list, .substitute-list {
   list-style-type: none;
-  padding: 0;
-  margin: 0;
-  overflow-y: auto;
-  flex-grow: 1;
-  width: 80%;
-  max-width: 300px;
+  padding-left: 0;
+  text-align: left;
+  width: 100%; /* Increased width to accommodate longer names */
+  max-width: 400px; /* Increased max-width */
+  margin: 0 auto;
 }
 
-.player-list li {
-  margin: 0.5vh 0;
+.substitutes-heading {
   color: white;
-  font-size: 2vh;
-  text-align: left;
+  font-size: 1.5vh;
 }
 
 .banner-container {
@@ -75,6 +60,22 @@ body, html {
   display: flex;
   justify-content: center;
   align-items: center;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+}
+
+.team h2 {
+  text-align: center;
+  color: white;
+  font-size: 3.5vh;
+  margin: 1vh 0;
+}
+
+.player-list li {
+  margin: 0.5vh 0;
+  color: white;
+  font-size: 2vh;
 }
 
 .banner-image {
@@ -83,17 +84,11 @@ body, html {
 }
 
 .captain-icon {
-    width: 1em; /* Adjust the size to fit well with text */
-    height: auto; /* Maintain aspect ratio */
-    margin-left: 0.5em; /* Adjust spacing as needed */
-    vertical-align: middle; /* Align with the text */
+  width: 1em;
+  height: auto;
+  margin-left: 0.5em;
+  vertical-align: middle;
 }
-
-.substitutes-heading {
-    color: white;
-    font-size: 2.5vh; 
-}
-
 
 /* Responsive font sizing */
 @media screen and (max-width: 1024px) {
@@ -113,7 +108,7 @@ body, html {
     font-size: 12pt;
   }
   .team h2 {
-    font-size: 2vh;
+    font-size: 3vh;
   }
   .player-list li {
     font-size: 1.6vh;
