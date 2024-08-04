@@ -19,12 +19,15 @@ body, html {
   justify-content: space-between;
   position: relative;
   min-height: 100vh;
+  align-items: center; /* Center the entire blackboard content */
 }
 
 .teams-container {
   display: flex;
-  justify-content: space-between; /* Ensure even spacing */
-  width: 100%;
+  justify-content: space-between;
+  align-items: flex-start;
+  width: 80%; /* Ensures container does not take full width of blackboard */
+  max-width: 1200px; /* Limit max width to ensure proper centering */
 }
 
 .team {
@@ -32,12 +35,12 @@ body, html {
   flex-direction: column;
   align-items: center;
   text-align: center;
-  flex: 0 1 45%; /* Consistent width and spacing */
+  flex: 0 1 45%;
 }
 
 .team-logo {
-  width: 50px; /* Fixed width */
-  height: 50px; /* Fixed height */
+  width: 100px; /* Fixed width */
+  height: 100px; /* Fixed height */
   object-fit: contain; /* Ensure the image fits within these bounds */
 }
 
@@ -45,14 +48,14 @@ body, html {
   list-style-type: none;
   padding-left: 0;
   text-align: left;
-  width: 95%; /* Increased width to accommodate longer names */
-  max-width: 400px; /* Increased max-width */
+  width: 90%; /* Increased width to accommodate longer names */
+  max-width: 350px; /* Increased max-width */
   margin: 0 auto;
 }
 
 .substitutes-heading {
   color: white;
-  font-size: 1.5vh;
+  font-size: 2.5vh;
 }
 
 .banner-container {
@@ -110,7 +113,7 @@ body, html {
     font-size: 12pt;
   }
   .team h2 {
-    font-size: 3vh;
+    font-size: 2vh;
   }
   .player-list li {
     font-size: 1.6vh;
