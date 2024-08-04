@@ -82,6 +82,19 @@ body, html {
   height: auto;
 }
 
+.captain-icon {
+    width: 1em; /* Adjust the size to fit well with text */
+    height: auto; /* Maintain aspect ratio */
+    margin-left: 0.5em; /* Adjust spacing as needed */
+    vertical-align: middle; /* Align with the text */
+}
+
+.substitutes-heading {
+    color: white;
+    font-size: 2.5vh; 
+}
+
+
 /* Responsive font sizing */
 @media screen and (max-width: 1024px) {
   body {
