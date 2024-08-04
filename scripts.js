@@ -23,11 +23,20 @@ function populateTeam(teamData, teamType) {
     logoImg.src = teamData.logo;
     teamName.textContent = teamData.name;
 
-    substituteList.innerHTML = '<h3 style="color: white;">Substitutes</h3>';
+    substituteList.innerHTML = '<h3 class="substitutes-heading">Substitutes</h3>';
 
     teamData.players.forEach((player) => {
         const li = document.createElement('li');
         li.textContent = `${player.number}. ${player.name}`;
+
+        if (player.captain) {
+            const crownIcon = document.createElement('img');
+            crownIcon.src = 'https://raw.githubusercontent.com/mja1337/roster/main/crown.png';
+            crownIcon.alt = 'Captain';
+            crownIcon.className = 'captain-icon'; // For styling purposes
+            li.appendChild(crownIcon);
+        }
+
         if (player.substitute) {
             substituteList.appendChild(li);
         } else {
