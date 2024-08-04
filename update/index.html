@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="https://images.squarespace-cdn.com/content/v1/619758344d16e93725c39d0a/fd45bb84-8340-4010-bbde-66f31c1ca075/favicon.ico?format=100w" type="image/x-icon">
-    <title>RBFC Roster Update</title>
+    <title>RBFC Team Sheet Update</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -158,11 +158,13 @@
             <label>
                 <input type="checkbox" id="homePlayerSubstituteInput">
                 Substitute
+				<input type="checkbox" name="captain" id="homeCaptainCheckbox-playerId"> 
+				Captain
             </label>
         </div>
         <button id="homeAddPlayer">Add Player</button>
         
-        <h3>Current Roster</h3>
+        <h3>Current Team</h3>
         <div id="homePlayerList"></div>
     </div>
     
@@ -185,11 +187,13 @@
             <label>
                 <input type="checkbox" id="awayPlayerSubstituteInput">
                 Substitute
+				<input type="checkbox" name="captain" id="awayCaptainCheckbox-playerId"> 
+				Captain
             </label>
         </div>
         <button id="awayAddPlayer">Add Player</button>
         
-        <h3>Current Roster</h3>
+        <h3>Current Away Team</h3>
         <div id="awayPlayerList"></div>
         
     </div>
