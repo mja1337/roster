@@ -23,7 +23,8 @@ body, html {
 
 .teams-container {
   display: flex;
-  justify-content: space-evenly; /* Distribute space evenly */
+  justify-content: space-between; /* Ensure even spacing */
+  width: 100%;
 }
 
 .team {
@@ -31,6 +32,7 @@ body, html {
   flex-direction: column;
   align-items: center;
   text-align: center;
+  flex: 0 1 45%; /* Consistent width and spacing */
 }
 
 .team-logo {
@@ -43,7 +45,7 @@ body, html {
   list-style-type: none;
   padding-left: 0;
   text-align: left;
-  width: 100%; /* Increased width to accommodate longer names */
+  width: 95%; /* Increased width to accommodate longer names */
   max-width: 400px; /* Increased max-width */
   margin: 0 auto;
 }
