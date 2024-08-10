@@ -9,17 +9,16 @@ body, html {
 
 .blackboard {
   background-color: #000000;
-  width: 100vw; /* Full viewport width */
-  height: 100vh; /* Full viewport height */
+  width: calc(100% - 2vh); /* Full viewport width accounting for borders */
+  height: calc(100vh - 2vh); /* Full viewport height accounting for borders */
   padding: 1vh; /* Adjusted padding */
   margin: 0;
   border: 1vh solid #F7931A;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  justify-content: space-between; /* Ensure content is spaced and uses available height */
+  justify-content: space-between; /* Distribute space evenly */
   align-items: center;
-  overflow: hidden; /* Prevent internal scrolling */
 }
 
 .teams-container {
@@ -28,7 +27,7 @@ body, html {
   align-items: flex-start;
   width: 90%;
   max-width: 1000px;
-  flex: 1; /* Allow container to take up remaining space */
+  flex-grow: 1; /* Allow this container to grow and fill the space */
   box-sizing: border-box;
 }
 
@@ -54,7 +53,7 @@ body, html {
   width: 90%;
   max-width: 350px;
   margin: 0 auto;
-  flex: 1; /* Allow lists to take up available space */
+  flex-grow: 1; /* Allow lists to grow within available space */
   overflow-y: auto; /* Allow scrolling within lists if content is too long */
 }
 
@@ -71,6 +70,7 @@ body, html {
   justify-content: center;
   align-items: center;
   flex-shrink: 0; /* Prevent banner from shrinking */
+  height: 10vh; /* Ensure enough space for the banner */
 }
 
 .team h2 {
@@ -115,7 +115,7 @@ body, html {
   }
   .blackboard {
     padding: 1vh;
-    height: 100vh; /* Ensure full content is visible */
+    height: calc(100vh - 2vh); /* Ensure full content is visible */
   }
   .teams-container {
     width: 85%;
@@ -139,6 +139,6 @@ body, html {
   }
   .blackboard {
     padding: 0.5vh;
-    height: 100vh; /* Ensure full content is visible */
+    height: calc(100vh - 2vh); /* Ensure full content is visible */
   }
 }
