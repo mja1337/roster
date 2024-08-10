@@ -22,7 +22,7 @@ body, html {
 
 .teams-container {
   position: absolute;
-  top: 10vh; /* Positioned below the border */
+  top: 10vh; /* Positioned below the top border */
   left: 2vh; /* Positioned within the left border */
   width: calc(100vw - 4vh); /* Account for the left and right borders */
   height: 65vh; /* Constrained to fit between top and bottom elements */
@@ -60,10 +60,10 @@ body, html {
 
 .banner-container {
   position: absolute;
-  bottom: 1vh; /* Positioned above the bottom border */
+  bottom: 2vh; /* Ensure it does not overlap with the bottom border */
   left: 2vh; /* Positioned within the left border */
   width: calc(100vw - 4vh); /* Account for the left and right borders */
-  height: 10vh; /* Ensure it's large enough to be visible */
+  height: 8vh; /* Ensure it fits above the bottom border */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -83,6 +83,7 @@ body, html {
 
 .banner-image {
   max-width: 100%;
+  max-height: 100%; /* Ensure the image fits within the container */
   height: auto;
 }
 
