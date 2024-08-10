@@ -4,20 +4,20 @@ body, html {
   height: 100%;
   font-family: 'Arial', sans-serif;
   background-color: #333;
-  overflow-x: hidden; /* Prevent horizontal overflow causing a gap */
+  overflow: hidden; /* Prevent scrolling */
 }
 
 .blackboard {
   background-color: #000000;
-  width: 100vw; /* Ensure the blackboard takes the full viewport width */
-  height: 100vh; /* Ensure the blackboard takes the full viewport height */
-  padding: 1.5vh; /* Adjusted padding */
+  width: 100vw; /* Full viewport width */
+  height: 100vh; /* Full viewport height */
+  padding: 1vh; /* Adjusted padding */
   margin: 0;
   border: 1vh solid #F7931A;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: space-between; /* Ensure content is spaced and uses available height */
   align-items: center;
   overflow: hidden; /* Prevent internal scrolling */
 }
@@ -26,9 +26,10 @@ body, html {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  width: 90%; /* Adjust width to ensure no horizontal overflow */
+  width: 90%;
   max-width: 1000px;
-  flex: 1 0 auto; /* Allow teams-container to grow and shrink */
+  flex: 1; /* Allow container to take up remaining space */
+  box-sizing: border-box;
 }
 
 .team {
@@ -43,6 +44,7 @@ body, html {
   width: 80px;
   height: 80px;
   object-fit: contain;
+  flex-shrink: 0; /* Prevent logos from shrinking */
 }
 
 .player-list, .substitute-list {
@@ -52,6 +54,8 @@ body, html {
   width: 90%;
   max-width: 350px;
   margin: 0 auto;
+  flex: 1; /* Allow lists to take up available space */
+  overflow-y: auto; /* Allow scrolling within lists if content is too long */
 }
 
 .substitutes-heading {
@@ -66,9 +70,7 @@ body, html {
   display: flex;
   justify-content: center;
   align-items: center;
-  position: absolute;
-  bottom: 0; /* Stick to the bottom */
-  left: 0;
+  flex-shrink: 0; /* Prevent banner from shrinking */
 }
 
 .team h2 {
