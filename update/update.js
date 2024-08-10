@@ -100,18 +100,7 @@ function addPlayerToList(team, playerName, playerNumber, isSubstitute, isCaptain
         }
     });
     playerItem.querySelector('.player-substitute').addEventListener('change', (e) => updatePlayer(team, index, 'substitute', e.target.checked));
-    playerItem.querySelector('.player-captain').addEventListener('change', (e) => {
-        if (e.target.checked) {
-            const otherCaptains = listElement.querySelectorAll('.player-captain');
-            otherCaptains.forEach((checkbox, i) => {
-                if (i !== index) {
-                    checkbox.checked = false;
-                    updatePlayer(team, i, 'captain', false);
-                }
-            });
-        }
-        updatePlayer(team, index, 'captain', e.target.checked);
-    });
+    playerItem.querySelector('.player-captain').addEventListener('change', (e) => handleCaptainSelection(e, team, index));
 
     // Handle deletion without relying on data-index
     playerItem.querySelector('.delete-player').addEventListener('click', () => {
@@ -124,6 +113,20 @@ function addPlayerToList(team, playerName, playerNumber, isSubstitute, isCaptain
     playerItem.addEventListener('dragover', handleDragOver);
     playerItem.addEventListener('drop', handleDrop);
     playerItem.addEventListener('dragend', handleDragEnd);
+}
+
+function handleCaptainSelection(e, team, index) {
+    const listElement = document.getElementById(`${team}PlayerList`);
+    if (e.target.checked) {
+        // Uncheck any other captain checkboxes before adding a new captain
+        const otherCaptains = listElement.querySelectorAll('.player-captain');
+        otherCaptains.forEach((checkbox) => {
+            if (checkbox !== e.target) {
+                checkbox.checked = false;
+            }
+        });
+    }
+    updatePlayer(team, index, 'captain', e.target.checked);
 }
 
 function updatePlayer(team, index, field, value) {
@@ -178,17 +181,6 @@ function addPlayer(team) {
     const isCaptain = captainInput ? captainInput.checked : false;
 
     numberInput.classList.remove('error');
-
-    if (isCaptain) {
-        // Uncheck any other captain checkboxes before adding a new captain
-        const listElement = document.getElementById(`${team}PlayerList`);
-        const existingCaptain = listElement.querySelector('.player-captain:checked');
-        if (existingCaptain) {
-            existingCaptain.checked = false;
-            const existingCaptainIndex = existingCaptain.getAttribute('data-index');
-            updatePlayer(team, existingCaptainIndex, 'captain', false);
-        }
-    }
 
     if (playerName && isValidNumber(playerNumber)) {
         const listElement = document.getElementById(`${team}PlayerList`);
@@ -373,17 +365,9 @@ function handleDrop(e) {
     const targetItem = e.target.closest('.player-item');
 
     if (draggedItem !== targetItem) {
-        // Swap the elements in the DOM
+        // Move the dragged item to the new position
         const listElement = draggedItem.parentNode;
-        const draggedIndex = Array.from(listElement.children).indexOf(draggedItem);
-        const targetIndex = Array.from(listElement.children).indexOf(targetItem);
-
-        if (draggedIndex < targetIndex) {
-            listElement.insertBefore(targetItem, draggedItem);
-            listElement.insertBefore(draggedItem, targetItem.nextSibling);
-        } else {
-            listElement.insertBefore(draggedItem, targetItem);
-        }
+        listElement.insertBefore(draggedItem, targetItem);
 
         // Update the data-index attributes after reordering
         updatePlayerListOrder(listElement.id);
@@ -415,6 +399,21 @@ function updatePlayerListOrder(teamListId) {
             const itemToDelete = e.target.closest('.player-item');
             listElement.removeChild(itemToDelete);
             updatePlayerListOrder(teamListId); // Ensure order is updated after deletion
+        });
+    });
+
+    // Reattach event listeners for substitutes and captains
+    listElement.querySelectorAll('.player-substitute').forEach((checkbox) => {
+        checkbox.addEventListener('change', (e) => {
+            const index = parseInt(checkbox.getAttribute('data-index'));
+            updatePlayer(teamListId.replace('PlayerList', ''), index, 'substitute', e.target.checked);
+        });
+    });
+
+    listElement.querySelectorAll('.player-captain').forEach((checkbox) => {
+        checkbox.addEventListener('change', (e) => {
+            const index = parseInt(checkbox.getAttribute('data-index'));
+            handleCaptainSelection(e, teamListId.replace('PlayerList', ''), index);
         });
     });
 }
