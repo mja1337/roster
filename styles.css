@@ -18,8 +18,9 @@ body, html {
   flex-direction: column;
   justify-content: space-between;
   position: relative;
-  min-height: 100vh;
+  min-height: calc(100vh - 2vh); /* Ensure the entire content fits within the viewport */
   align-items: center; /* Center the entire blackboard content */
+  overflow: hidden; /* Ensure no overflow that might cause cutoff */
 }
 
 .teams-container {
@@ -66,7 +67,7 @@ body, html {
   justify-content: center;
   align-items: center;
   position: absolute;
-  bottom: 0;
+  bottom: 1vh; /* Adjusted to ensure it's fully visible */
   left: 0;
 }
 
@@ -112,6 +113,7 @@ body, html {
   }
   .blackboard {
     padding: 1vh; /* Adjust padding for smaller screens */
+    min-height: calc(100vh - 2vh); /* Ensure full content is visible */
   }
   .teams-container {
     width: 85%; /* Adjusted width for smaller screens */
@@ -132,5 +134,9 @@ body, html {
   .team-logo {
     width: 50px; /* Even smaller on very small screens */
     height: 50px;
+  }
+  .blackboard {
+    padding: 0.5vh; /* Further adjust padding for very small screens */
+    min-height: calc(100vh - 1vh); /* Ensure full content is visible */
   }
 }
