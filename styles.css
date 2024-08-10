@@ -18,14 +18,16 @@ body, html {
   border: 1vh solid #F7931A; /* Border on all sides */
   box-sizing: border-box;
   background-color: #000000;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* Distribute content vertically */
+  align-items: center;
+  padding: 0;
 }
 
 .teams-container {
-  position: absolute;
-  top: 10vh; /* Positioned below the top border */
-  left: 2vh; /* Positioned within the left border */
-  width: calc(100vw - 4vh); /* Account for the left and right borders */
-  height: 65vh; /* Constrained to fit between top and bottom elements */
+  width: 90vw; /* Slightly reduced to avoid border issues */
+  height: 65vh; /* Adjust height to fit within the screen */
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
@@ -33,24 +35,24 @@ body, html {
 }
 
 .team {
-  width: 45%; /* Allow space between teams */
+  width: 45%;
   text-align: center;
 }
 
 .team-logo {
-  width: 10vh;
-  height: 10vh;
+  width: 8vh;
+  height: 8vh;
   object-fit: contain;
+  margin-bottom: 1vh; /* Add spacing below the logo */
 }
 
 .player-list, .substitute-list {
   list-style-type: none;
   padding-left: 0;
   text-align: left;
-  margin: 1vh auto;
   width: 90%;
-  max-height: 50vh; /* Constrain the height to avoid overflow */
-  overflow-y: auto;
+  max-height: 45vh; /* Constrain the height to avoid overflow */
+  overflow-y: auto; /* Allow scrolling within lists if content is too long */
 }
 
 .substitutes-heading {
@@ -59,19 +61,17 @@ body, html {
 }
 
 .banner-container {
-  position: absolute;
-  bottom: 2vh; /* Ensure it does not overlap with the bottom border */
-  left: 2vh; /* Positioned within the left border */
-  width: calc(100vw - 4vh); /* Account for the left and right borders */
-  height: 8vh; /* Ensure it fits above the bottom border */
+  width: 90vw;
+  height: 10vh; /* Slightly reduced height */
   display: flex;
   justify-content: center;
   align-items: center;
+  box-sizing: border-box;
 }
 
 .team h2 {
   color: white;
-  font-size: 3vh;
+  font-size: 2.5vh;
   margin: 1vh 0;
 }
 
@@ -83,7 +83,7 @@ body, html {
 
 .banner-image {
   max-width: 100%;
-  max-height: 100%; /* Ensure the image fits within the container */
+  max-height: 100%;
   height: auto;
 }
 
@@ -97,26 +97,26 @@ body, html {
 /* Responsive adjustments */
 @media screen and (max-width: 1024px) {
   .team h2 {
-    font-size: 2.5vh;
+    font-size: 2vh;
   }
   .player-list li {
     font-size: 1.8vh;
   }
   .team-logo {
-    width: 8vh;
-    height: 8vh;
+    width: 6vh;
+    height: 6vh;
   }
 }
 
 @media screen and (max-width: 768px) {
   .team h2 {
-    font-size: 2vh;
+    font-size: 1.8vh;
   }
   .player-list li {
     font-size: 1.6vh;
   }
   .team-logo {
-    width: 6vh;
-    height: 6vh;
+    width: 5vh;
+    height: 5vh;
   }
 }
