@@ -4,21 +4,21 @@ body, html {
   height: 100%;
   font-family: 'Arial', sans-serif;
   background-color: #333;
-  overflow: hidden; /* Prevent body from scrolling */
+  overflow-x: hidden; /* Prevent horizontal overflow causing a gap */
 }
 
 .blackboard {
   background-color: #000000;
-  width: calc(100% - 2vh); /* Adjust width to account for border */
-  height: calc(100vh - 2vh); /* Ensure blackboard height fits within viewport */
-  padding: 1.5vh; /* Adjusted padding to prevent cutoff */
+  width: 100vw; /* Ensure the blackboard takes the full viewport width */
+  height: 100vh; /* Ensure the blackboard takes the full viewport height */
+  padding: 1.5vh; /* Adjusted padding */
   margin: 0;
   border: 1vh solid #F7931A;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  align-items: center; /* Center the entire blackboard content */
+  align-items: center;
   overflow: hidden; /* Prevent internal scrolling */
 }
 
@@ -26,8 +26,8 @@ body, html {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  width: 90%; /* Slightly increased width */
-  max-width: 1000px; /* Reduced max-width to better fit smaller screens */
+  width: 90%; /* Adjust width to ensure no horizontal overflow */
+  max-width: 1000px;
   flex: 1 0 auto; /* Allow teams-container to grow and shrink */
 }
 
@@ -40,17 +40,17 @@ body, html {
 }
 
 .team-logo {
-  width: 80px; /* Reduced width */
-  height: 80px; /* Reduced height */
-  object-fit: contain; /* Ensure the image fits within these bounds */
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
 }
 
 .player-list, .substitute-list {
   list-style-type: none;
   padding-left: 0;
   text-align: left;
-  width: 90%; /* Increased width to accommodate longer names */
-  max-width: 350px; /* Increased max-width */
+  width: 90%;
+  max-width: 350px;
   margin: 0 auto;
 }
 
@@ -108,16 +108,16 @@ body, html {
     font-size: 1.8vh;
   }
   .team-logo {
-    width: 60px; /* Smaller logos on smaller screens */
+    width: 60px;
     height: 60px;
   }
   .blackboard {
-    padding: 1vh; /* Adjust padding for smaller screens */
-    height: calc(100vh - 2vh); /* Ensure full content is visible */
+    padding: 1vh;
+    height: 100vh; /* Ensure full content is visible */
   }
   .teams-container {
-    width: 85%; /* Adjusted width for smaller screens */
-    max-width: 900px; /* Adjust max-width accordingly */
+    width: 85%;
+    max-width: 900px;
   }
 }
 
@@ -132,11 +132,11 @@ body, html {
     font-size: 1.6vh;
   }
   .team-logo {
-    width: 50px; /* Even smaller on very small screens */
+    width: 50px;
     height: 50px;
   }
   .blackboard {
-    padding: 0.5vh; /* Further adjust padding for very small screens */
-    height: calc(100vh - 1vh); /* Ensure full content is visible */
+    padding: 0.5vh;
+    height: 100vh; /* Ensure full content is visible */
   }
 }
