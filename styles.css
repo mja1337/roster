@@ -2,6 +2,7 @@ body, html {
   margin: 0;
   padding: 0;
   height: 100%;
+  width: 100%;
   font-family: 'Arial', sans-serif;
   background-color: #333;
   overflow: hidden; /* Prevent scrolling */
@@ -9,23 +10,24 @@ body, html {
 
 .blackboard {
   background-color: #000000;
-  width: calc(100% - 2vh); /* Full viewport width accounting for borders */
-  height: calc(100vh - 2vh); /* Full viewport height accounting for borders */
-  padding: 1vh; /* Adjusted padding */
+  width: 100vw; /* Full viewport width */
+  height: 100vh; /* Full viewport height */
+  padding: 0; /* Remove padding to maximize space */
   margin: 0;
   border: 1vh solid #F7931A;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  justify-content: space-between; /* Distribute space evenly */
+  justify-content: space-between; /* Evenly distribute content */
   align-items: center;
+  overflow: hidden; /* Prevent internal scrolling */
 }
 
 .teams-container {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  width: 90%;
+  width: calc(100% - 4vh); /* Adjust width to fit within borders */
   max-width: 1000px;
   flex-grow: 1; /* Allow this container to grow and fill the space */
   box-sizing: border-box;
@@ -40,10 +42,9 @@ body, html {
 }
 
 .team-logo {
-  width: 80px;
-  height: 80px;
+  width: 8vh;
+  height: 8vh;
   object-fit: contain;
-  flex-shrink: 0; /* Prevent logos from shrinking */
 }
 
 .player-list, .substitute-list {
@@ -64,19 +65,17 @@ body, html {
 
 .banner-container {
   width: 100%;
-  padding: 1vh;
+  height: 10vh; /* Fixed height to ensure visibility */
   box-sizing: border-box;
   display: flex;
   justify-content: center;
   align-items: center;
-  flex-shrink: 0; /* Prevent banner from shrinking */
-  height: 10vh; /* Ensure enough space for the banner */
 }
 
 .team h2 {
   text-align: center;
   color: white;
-  font-size: 3.5vh;
+  font-size: 3vh;
   margin: 1vh 0;
 }
 
@@ -100,9 +99,6 @@ body, html {
 
 /* Responsive adjustments */
 @media screen and (max-width: 1024px) {
-  body {
-    font-size: 14pt;
-  }
   .team h2 {
     font-size: 2.5vh;
   }
@@ -110,23 +106,15 @@ body, html {
     font-size: 1.8vh;
   }
   .team-logo {
-    width: 60px;
-    height: 60px;
-  }
-  .blackboard {
-    padding: 1vh;
-    height: calc(100vh - 2vh); /* Ensure full content is visible */
+    width: 6vh;
+    height: 6vh;
   }
   .teams-container {
-    width: 85%;
-    max-width: 900px;
+    width: calc(100% - 4vh);
   }
 }
 
 @media screen and (max-width: 768px) {
-  body {
-    font-size: 12pt;
-  }
   .team h2 {
     font-size: 2vh;
   }
@@ -134,11 +122,10 @@ body, html {
     font-size: 1.6vh;
   }
   .team-logo {
-    width: 50px;
-    height: 50px;
+    width: 5vh;
+    height: 5vh;
   }
-  .blackboard {
-    padding: 0.5vh;
-    height: calc(100vh - 2vh); /* Ensure full content is visible */
+  .teams-container {
+    width: calc(100% - 4vh);
   }
 }
