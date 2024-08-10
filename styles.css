@@ -1,17 +1,15 @@
 body, html {
   margin: 0;
   padding: 0;
-  height: 100vh;
-  width: 100vw;
+  height: 100%;
+  width: 100%;
   font-family: 'Arial', sans-serif;
   background-color: #333;
   overflow: hidden; /* Strictly prevent scrolling */
 }
 
 .blackboard {
-  position: absolute;
-  top: 0;
-  left: 0;
+  position: relative;
   width: 100vw;
   height: 100vh;
   border: 1vh solid #F7931A;
@@ -19,24 +17,22 @@ body, html {
   background-color: #000000;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: space-between; /* Space out content to fit viewport */
   align-items: center;
   padding: 0;
-  overflow: hidden; /* Prevent any overflow */
 }
 
 .teams-container {
-  width: 90vw; /* Reduced width to avoid border overlap */
-  height: 60vh; /* Constrained height to fit content */
+  width: 90vw; /* Slightly reduced width */
+  height: 55vh; /* Reduced height to allow room for other content */
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
   box-sizing: border-box;
-  overflow: hidden; /* Prevent internal overflow */
 }
 
 .team {
-  width: 45%; /* Ensure spacing between teams */
+  width: 45%;
   text-align: center;
 }
 
@@ -48,12 +44,12 @@ body, html {
 
 .player-list, .substitute-list {
   list-style-type: none;
-  padding: 0;
-  margin: 0;
+  padding-left: 0;
   text-align: left;
   width: 90%;
-  max-height: 35vh; /* Ensure the lists don't push content down */
-  overflow: hidden; /* Prevent scrolling within lists */
+  max-height: 30vh; /* Constrain the height to ensure enough space below */
+  margin: 0; /* Remove margin to prevent extra space */
+  overflow: hidden; /* Ensure no scrolling */
 }
 
 .substitutes-heading {
@@ -63,11 +59,12 @@ body, html {
 
 .banner-container {
   width: 90vw;
-  height: 10vh; /* Reduced height to fit within the viewport */
+  height: 10vh; /* Reduced height */
   display: flex;
   justify-content: center;
   align-items: center;
   box-sizing: border-box;
+  margin-top: auto; /* Push the banner to the bottom */
 }
 
 .team h2 {
