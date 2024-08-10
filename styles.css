@@ -6,28 +6,29 @@ body, html {
   font-family: 'Arial', sans-serif;
   background-color: #333;
   overflow: hidden; /* Prevent scrolling */
+  box-sizing: border-box;
 }
 
 .blackboard {
+  position: relative;
   background-color: #000000;
-  width: 98vw; /* Slightly reduced width to ensure the right border is visible */
-  height: 98vh; /* Slightly reduced height to ensure all content fits */
-  border: 1vh solid #F7931A; /* Border taking up 2vh in total */
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
+  width: 100vw;
+  height: 100vh;
+  border: 1vh solid #F7931A; /* Keep the border */
+  padding: 0;
   box-sizing: border-box;
 }
 
 .teams-container {
+  position: absolute;
+  top: 2vh;
+  left: 2vh;
+  right: 2vh;
+  bottom: 10vh; /* Leave space for the bottom banner */
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  width: 90%; /* Adjust to prevent border overflow */
-  max-width: 95vw; /* Constrain max-width to prevent overflow */
-  flex-grow: 1; /* Fill available space */
-  margin-top: 1vh; /* Small margin for spacing */
+  width: calc(100% - 4vh); /* Ensure container doesn't overflow */
   box-sizing: border-box;
 }
 
@@ -36,12 +37,12 @@ body, html {
   flex-direction: column;
   align-items: center;
   text-align: center;
-  flex: 1 1 45%;
+  flex: 1;
 }
 
 .team-logo {
-  width: 9vh; /* Adjusted size for better visibility */
-  height: 9vh;
+  width: 10vh; /* Larger size for better visibility */
+  height: 10vh;
   object-fit: contain;
 }
 
@@ -54,6 +55,7 @@ body, html {
   margin: 0 auto;
   flex-grow: 1;
   overflow-y: auto;
+  max-height: 100%; /* Ensure the list does not overflow */
 }
 
 .substitutes-heading {
@@ -62,14 +64,15 @@ body, html {
 }
 
 .banner-container {
-  width: 100%;
-  height: 8vh; /* Reduced height to ensure visibility */
+  position: absolute;
+  bottom: 1vh; /* Positioned above the bottom border */
+  left: 1vh;
+  right: 1vh;
+  height: 8vh; /* Smaller fixed height */
   box-sizing: border-box;
   display: flex;
   justify-content: center;
   align-items: center;
-  flex-shrink: 0;
-  margin-bottom: 1vh; /* Ensure it doesn't overlap the bottom border */
 }
 
 .team h2 {
@@ -86,8 +89,9 @@ body, html {
 }
 
 .banner-image {
-  max-width: 80%; /* Reduced size to prevent overlap */
+  max-width: 80%;
   height: auto;
+  object-fit: contain;
 }
 
 .captain-icon {
@@ -106,11 +110,8 @@ body, html {
     font-size: 1.8vh;
   }
   .team-logo {
-    width: 7vh;
-    height: 7vh;
-  }
-  .banner-container {
-    height: 6vh; /* Adjust for smaller screens */
+    width: 8vh;
+    height: 8vh;
   }
 }
 
@@ -124,8 +125,5 @@ body, html {
   .team-logo {
     width: 6vh;
     height: 6vh;
-  }
-  .banner-container {
-    height: 5vh; /* Adjust for smaller screens */
   }
 }
