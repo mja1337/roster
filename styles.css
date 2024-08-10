@@ -6,29 +6,33 @@ body, html {
   font-family: 'Arial', sans-serif;
   background-color: #333;
   overflow: hidden; /* Prevent scrolling */
+}
+
+.outer-container {
+  position: relative;
+  background-color: #F7931A; /* Outer container with border color */
+  width: 100vw;
+  height: 100vh;
+  padding: 1vh; /* Space inside for simulated border */
   box-sizing: border-box;
 }
 
-.blackboard {
-  position: relative;
-  background-color: #000000;
-  width: 100vw;
-  height: 100vh;
-  border: 1vh solid #F7931A; /* Keep the border */
-  padding: 0;
+.inner-container {
+  background-color: #000000; /* Main content background */
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
   box-sizing: border-box;
 }
 
 .teams-container {
-  position: absolute;
-  top: 2vh;
-  left: 2vh;
-  right: 2vh;
-  bottom: 10vh; /* Leave space for the bottom banner */
+  width: 90%;
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  width: calc(100% - 4vh); /* Ensure container doesn't overflow */
   box-sizing: border-box;
 }
 
@@ -41,7 +45,7 @@ body, html {
 }
 
 .team-logo {
-  width: 10vh; /* Larger size for better visibility */
+  width: 10vh;
   height: 10vh;
   object-fit: contain;
 }
@@ -53,9 +57,8 @@ body, html {
   width: 90%;
   max-width: 350px;
   margin: 0 auto;
-  flex-grow: 1;
   overflow-y: auto;
-  max-height: 100%; /* Ensure the list does not overflow */
+  max-height: calc(100vh - 20vh); /* Adjusted height to fit within the viewport */
 }
 
 .substitutes-heading {
@@ -64,12 +67,8 @@ body, html {
 }
 
 .banner-container {
-  position: absolute;
-  bottom: 1vh; /* Positioned above the bottom border */
-  left: 1vh;
-  right: 1vh;
-  height: 8vh; /* Smaller fixed height */
-  box-sizing: border-box;
+  width: 100%;
+  height: 8vh; /* Fixed height */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -89,7 +88,7 @@ body, html {
 }
 
 .banner-image {
-  max-width: 80%;
+  max-width: 70%;
   height: auto;
   object-fit: contain;
 }
