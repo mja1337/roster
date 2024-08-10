@@ -8,9 +8,9 @@ body, html {
 
 .blackboard {
   background-color: #000000;
-  width: 100%;
-  height: 100%;
-  padding: 2vh;
+  width: calc(100% - 2vh); /* Adjust width to account for border */
+  height: calc(100% - 2vh); /* Adjust height to account for border */
+  padding: 1.5vh; /* Reduced padding to prevent cutoff */
   margin: 0;
   border: 1vh solid #F7931A;
   box-sizing: border-box;
@@ -26,8 +26,8 @@ body, html {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  width: 80%; /* Ensures container does not take full width of blackboard */
-  max-width: 1200px; /* Limit max width to ensure proper centering */
+  width: 90%; /* Slightly increased width */
+  max-width: 1000px; /* Reduced max-width to better fit smaller screens */
 }
 
 .team {
@@ -39,8 +39,8 @@ body, html {
 }
 
 .team-logo {
-  width: 100px; /* Fixed width */
-  height: 100px; /* Fixed height */
+  width: 80px; /* Reduced width */
+  height: 80px; /* Reduced height */
   object-fit: contain; /* Ensure the image fits within these bounds */
 }
 
@@ -95,7 +95,7 @@ body, html {
   vertical-align: middle;
 }
 
-/* Responsive font sizing */
+/* Responsive adjustments */
 @media screen and (max-width: 1024px) {
   body {
     font-size: 14pt;
@@ -105,6 +105,17 @@ body, html {
   }
   .player-list li {
     font-size: 1.8vh;
+  }
+  .team-logo {
+    width: 60px; /* Smaller logos on smaller screens */
+    height: 60px;
+  }
+  .blackboard {
+    padding: 1vh; /* Adjust padding for smaller screens */
+  }
+  .teams-container {
+    width: 85%; /* Adjusted width for smaller screens */
+    max-width: 900px; /* Adjust max-width accordingly */
   }
 }
 
@@ -117,5 +128,9 @@ body, html {
   }
   .player-list li {
     font-size: 1.6vh;
+  }
+  .team-logo {
+    width: 50px; /* Even smaller on very small screens */
+    height: 50px;
   }
 }
