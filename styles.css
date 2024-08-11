@@ -1,5 +1,6 @@
 /* Global Styles */
 body, html {
+  font-family: 'Montserrat', sans-serif;
   margin: 0;
   padding: 0;
   width: 100vw;
@@ -49,25 +50,40 @@ main {
   margin: 2vh auto 0 auto; /* Add 2vh of space above the team containers */
 }
 
-/* Individual Team */
-.team {
-  background-color: #111;
+/* Home Team Styling */
+.home-team {
+  background-color: #1c1c1c;
   padding: 1vh 1.5vw;
-  border: 1px solid #555;
+  border: 1px solid #F7931A;
   border-radius: 8px;
   width: 48%;
   max-width: 400px;
   display: flex;
   flex-direction: column;
-  margin: 0 1vw; /* Add some spacing between the two team containers */
+  margin: 0 1vw;
 }
 
+/* Away Team Styling */
+.away-team {
+  background-color: #1c1c1c;
+  padding: 1vh 1.5vw;
+  border: 1px solid #FFFFFF;
+  border-radius: 8px;
+  width: 48%;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  margin: 0 1vw;
+}
 
 /* Team Titles */
 .team h2 {
-  font-size: calc(16px + 1vmin); /* Increase the size of the team names */
+  font-size: calc(10px + 1vmin); /* Increase the size of the team names */
+  color: #FFFFFF;
   text-align: center;
   margin: 0.5vh 0;
+  text-transform: uppercase; /* Optional: to match the styling with uppercase text */
+  letter-spacing: 0.1em; /* Optional: add spacing between letters for style */
 }
 
 /* Team Logo */
@@ -83,8 +99,8 @@ main {
 /* Player List */
 .player-list, .substitute-list {
   list-style: none;
-  padding: 0;
-  margin: 0.5vh auto; /* Center the list itself horizontally */
+  padding: 5px;
+  margin: 0.2vh auto; /* Center the list itself horizontally */
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -94,17 +110,19 @@ main {
 
 /* Player List Items */
 .player-list li, .substitute-list li {
-  background-color: #222;
-  margin: 0.2vh 0;
-  padding: 0.3vh 1vw; /* Increase padding to account for centering */
+  background-color: #0c0c0c;
+  margin: 0.25vh 0;
+  padding: 0.2vh 1vw; /* Increase padding to account for centering */
   border: 1px solid #444;
   border-radius: 4px;
   display: flex;
   align-items: center;
-  justify-content: center; /* Center text inside the list items */
+  justify-content: left; /* Center text inside the list items */
   font-size: calc(8px + 0.4vmin);
   width: 100%; /* Ensure list items take full width */
   max-width: 90%; /* Limit the width to prevent overflow */
+  min-width: 175px; /* Set a minimum width */
+  box-sizing: border-box; /* Ensure padding is included in width calculation */
 }
 
 
@@ -116,9 +134,13 @@ main {
 }
 
 /* Substitutes Header */
-.substitutes-header {
-  font-size: calc(10px + 0.2vmin); /* Slightly reduce the size of the substitutes heading */
-  margin: 0.5vh 0 0.2vh 0;
+.substitutes-heading, .starting-xi-heading {
+  font-size: calc(8px + 0.2vmin); /* Shared font size */
+  margin: 0.1vh 0 0.2vh 0;
+  color: #FFFFFF; /* Ensure it’s white to match the text color */
+  text-align: center;
+  text-transform: uppercase; /* Optional: to match the styling with uppercase text */
+  letter-spacing: 0.1em; /* Optional: add spacing between letters for style */
 }
 
 /* Footer */
