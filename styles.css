@@ -99,7 +99,7 @@ main {
 /* Player List */
 .player-list, .substitute-list {
   list-style: none;
-  padding: 5px;
+  padding: 4px;
   margin: 0.2vh auto; /* Center the list itself horizontally */
   flex: 1;
   display: flex;
@@ -112,8 +112,8 @@ main {
 .player-list li, .substitute-list li {
   background-color: #0c0c0c;
   margin: 0.25vh 0;
-  padding: 0.2vh 1vw; /* Increase padding to account for centering */
-  border: 1px solid #444;
+  padding: 0.5vh 1vw; /* Increase padding to account for centering */
+  border: 0.5px solid #444;
   border-radius: 4px;
   display: flex;
   align-items: center;
@@ -145,7 +145,7 @@ main {
 
 /* Footer */
 footer {
-  padding: 10px 0;
+  padding: 5px 0;
   background-color: #333;
   text-align: center;
 }
@@ -157,13 +157,13 @@ footer {
   align-items: center;
   max-width: 1200px;
   margin: 0 auto;
-  padding-top: 20px;
+  padding-top: 10px;
 }
 
 .banner-image {
-  width: 60%;  /* Fixed width */
-  height: 20%;  /* Fixed height */
-  margin: 5px 10px;
+  width: 30%;  /* Fixed width */
+  height: 10%;  /* Fixed height */
+  margin: 2px 5px;
   object-fit: contain;
 }
 
