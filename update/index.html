@@ -35,6 +35,10 @@
             cursor: pointer;
             font-weight: bold;
         }
+        /* Green color specifically for the Save button */
+        #saveButton {
+            background-color: #007504; /* Green color */
+        }
         .team-section {
             margin-bottom: 20px;
             background-color: #4D4D4D;
@@ -43,18 +47,23 @@
         }
         .player-item {
             display: flex;
-            flex-wrap: wrap;
             align-items: center;
             margin-bottom: 10px;
             background-color: #222;
             padding: 10px;
             border-radius: 5px;
         }
-        .player-item input[type="text"],
-        .player-item input[type="number"] {
-            flex: 1;
-            min-width: 120px;
-            margin-right: 10px;
+        .player-item input[type="text"].player-number,
+        .player-inputs input[type="text"]#homePlayerNumberInput,
+        .player-inputs input[type="text"]#awayPlayerNumberInput {
+            width: 60px; /* Smaller width for player number fields */
+            margin-right: 10px; /* Space between number and name fields */
+        }
+        .player-item input[type="text"].player-name,
+        .player-inputs input[type="text"]#homePlayerNameInput,
+        .player-inputs input[type="text"]#awayPlayerNameInput {
+            flex-grow: 1; /* Allows the name fields to take up the remaining space */
+            min-width: 200px; /* Minimum width for name fields */
         }
         .player-item label {
             display: flex;
@@ -72,40 +81,13 @@
         }
         .player-inputs {
             display: flex;
-            flex-wrap: wrap;
             align-items: center;
-            margin-bottom: 10px;
-        }
-        .player-inputs input[type="text"],
-        .player-inputs input[type="number"] {
-            flex: 1;
-            min-width: 120px;
-            margin-right: 10px;
-        }
-        .player-inputs label {
-            display: flex;
-            align-items: center;
-            margin-right: 10px;
-            white-space: nowrap;
-        }
-        .player-inputs input[type="checkbox"] {
-            width: auto;
-            margin-right: 5px;
-        }
-        #saveButton {
-            background-color: #4CAF50; /* Green color */
-        }
-        #resetAwayTeam {
-            background-color: #f44336; /* Red color */
             margin-bottom: 10px;
         }
         .player-name-input {
             display: flex;
             gap: 10px;
-        }
-        .player-name-input input,
-        .player-name-input select {
-            flex: 1;
+            width: 100%; /* Ensure full width for the input container */
         }
         .team-input {
             display: flex;
@@ -123,9 +105,6 @@
             background-color: #f44336; /* Red color */
             margin-top: 10px;
             margin-bottom: 10px;
-        }
-        input[type="text"].player-number {
-            width: 50px; 
         }
         .team-logo {
             width: 100px;
@@ -149,19 +128,20 @@
         <h3>Players</h3>
         <div class="player-inputs">
             <div class="player-name-input">
+                <input type="text" id="homePlayerNumberInput" placeholder="No.">
                 <select id="homePlayerNameSelect">
                     <option value="">-- Select player --</option>
                 </select>
-                <input type="text" id="homePlayerNameInput" placeholder="Enter player name">    
+                <input type="text" id="homePlayerNameInput" placeholder="Or enter player name">    
             </div>
-            <input type="text" id="homePlayerNumberInput" placeholder="Enter player number">
+
             <label for="homePlayerSubstituteInput">
                 <input type="checkbox" id="homePlayerSubstituteInput">
-                Substitute
+                Sub.
             </label>
             <label for="homePlayerCaptainInput">  
 				<input type="checkbox" name="captain" id="homePlayerCaptainInput"> 
-				Captain
+				Cap.
             </label>
         </div>
         <button id="homeAddPlayer">Add Player</button>
@@ -182,18 +162,17 @@
         </div>
         <input type="text" id="awayTeamLogo" placeholder="Away Team Logo URL">
 
-        
         <h3>Players</h3>
         <div class="player-inputs">
+            <input type="text" id="awayPlayerNumberInput" placeholder="No.">
             <input type="text" id="awayPlayerNameInput" placeholder="Enter player name">
-            <input type="text" id="awayPlayerNumberInput" placeholder="Enter player number">
             <label for="awayPlayerSubstituteInput">
                 <input type="checkbox" id="awayPlayerSubstituteInput">
-                Substitute
+                Sub.
             </label>
             <label for="awayPlayerCaptainInput">    
 				<input type="checkbox" name="captain" id="awayPlayerCaptainInput"> 
-				Captain
+				Cap.
             </label>
         </div>
         <button id="awayAddPlayer">Add Player</button>
