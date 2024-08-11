@@ -23,8 +23,6 @@ function populateTeam(teamData, teamType) {
     logoImg.src = teamData.logo;
     teamName.textContent = teamData.name;
 
-    substituteList.innerHTML = '<h3 class="substitutes-heading">Substitutes</h3>';
-
     teamData.players.forEach((player) => {
         const li = document.createElement('li');
         li.textContent = `${player.number}. ${player.name}`;
