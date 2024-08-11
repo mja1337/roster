@@ -60,54 +60,52 @@ function populatePlayerList(team, players) {
     const listElement = document.getElementById(`${team}PlayerList`);
     listElement.innerHTML = '';
 
-    players.forEach((player, index) => {
-        addPlayerToList(team, player.name, player.number, player.substitute, player.captain, index);
+    players.forEach((player) => {
+        addPlayerToList(team, player.name, player.number, player.substitute, player.captain);
     });
-
-    updatePlayerListOrder(listElement.id);  // Ensure correct ordering and event listeners
 }
 
-function addPlayerToList(team, playerName, playerNumber, isSubstitute, isCaptain, index) {
+function addPlayerToList(team, playerName, playerNumber, isSubstitute, isCaptain) {
     const listElement = document.getElementById(`${team}PlayerList`);
     const playerItem = document.createElement('div');
     playerItem.className = 'player-item';
-    playerItem.setAttribute('draggable', true);  // Make the item draggable
-    playerItem.setAttribute('data-index', index);  // Store the index for sorting
+    playerItem.setAttribute('draggable', true);
 
     playerItem.innerHTML = `
-        <input type="text" value="${playerName}" data-index="${index}" class="player-name" placeholder="Player name">
-        <input type="text" value="${playerNumber}" data-index="${index}" class="player-number" placeholder="Number">
+        <input type="text" value="${playerNumber}" class="player-number" placeholder="Number">
+        <input type="text" value="${playerName}" class="player-name" placeholder="Player name">
         <label>
-            <input type="checkbox" ${isSubstitute ? 'checked' : ''} data-index="${index}" class="player-substitute">
+            <input type="checkbox" ${isSubstitute ? 'checked' : ''} class="player-substitute">
             Substitute
         </label>
         <label>
-            <input type="checkbox" class="player-captain" ${isCaptain ? 'checked' : ''} data-index="${index}">
+            <input type="checkbox" class="player-captain" ${isCaptain ? 'checked' : ''}>
             Captain
         </label>
-        <button class="delete-player" data-index="${index}">Delete</button>
+        <button class="delete-player">Delete</button>
     `;
     listElement.appendChild(playerItem);
 
-    // Add event listeners for editing and deleting
-    playerItem.querySelector('.player-name').addEventListener('change', (e) => updatePlayer(team, index, 'name', e.target.value));
+    attachPlayerEventListeners(playerItem, team);
+}
+
+function attachPlayerEventListeners(playerItem, team) {
+    playerItem.querySelector('.player-name').addEventListener('change', (e) => updatePlayer(playerItem, team, 'name', e.target.value));
     playerItem.querySelector('.player-number').addEventListener('change', (e) => {
         if (isValidNumber(e.target.value)) {
-            updatePlayer(team, index, 'number', e.target.value);
+            updatePlayer(playerItem, team, 'number', e.target.value);
             e.target.classList.remove('error');
         } else {
             e.target.classList.add('error');
         }
     });
-    playerItem.querySelector('.player-substitute').addEventListener('change', (e) => updatePlayer(team, index, 'substitute', e.target.checked));
-    playerItem.querySelector('.player-captain').addEventListener('change', (e) => handleCaptainSelection(e, team, index));
+    playerItem.querySelector('.player-substitute').addEventListener('change', (e) => updatePlayer(playerItem, team, 'substitute', e.target.checked));
+    playerItem.querySelector('.player-captain').addEventListener('change', (e) => handleCaptainSelection(e, playerItem, team));
 
-    // Handle deletion without relying on data-index
     playerItem.querySelector('.delete-player').addEventListener('click', () => {
-        listElement.removeChild(playerItem);
-        updatePlayerListOrder(listElement.id);
+        playerItem.parentNode.removeChild(playerItem);
     });
-    
+
     // Add drag-and-drop event listeners
     playerItem.addEventListener('dragstart', handleDragStart);
     playerItem.addEventListener('dragover', handleDragOver);
@@ -115,10 +113,9 @@ function addPlayerToList(team, playerName, playerNumber, isSubstitute, isCaptain
     playerItem.addEventListener('dragend', handleDragEnd);
 }
 
-function handleCaptainSelection(e, team, index) {
+function handleCaptainSelection(e, playerItem, team) {
     const listElement = document.getElementById(`${team}PlayerList`);
     if (e.target.checked) {
-        // Uncheck any other captain checkboxes before adding a new captain
         const otherCaptains = listElement.querySelectorAll('.player-captain');
         otherCaptains.forEach((checkbox) => {
             if (checkbox !== e.target) {
@@ -126,31 +123,25 @@ function handleCaptainSelection(e, team, index) {
             }
         });
     }
-    updatePlayer(team, index, 'captain', e.target.checked);
 }
 
-function updatePlayer(team, index, field, value) {
-    const listElement = document.getElementById(`${team}PlayerList`);
-    const playerItems = listElement.getElementsByClassName('player-item');
-    if (index < playerItems.length) {
-        const playerItem = playerItems[index];
-        if (field === 'name') {
-            playerItem.querySelector('.player-name').value = value;
-        } else if (field === 'number') {
-            playerItem.querySelector('.player-number').value = value;
-        } else if (field === 'substitute') {
-            playerItem.querySelector('.player-substitute').checked = value;
-        } else if (field === 'captain') {
-            playerItem.querySelector('.player-captain').checked = value;
-        }
+function updatePlayer(playerItem, team, field, value) {
+    // No need to manage index manually here; just update the DOM element
+    if (field === 'name') {
+        playerItem.querySelector('.player-name').value = value;
+    } else if (field === 'number') {
+        playerItem.querySelector('.player-number').value = value;
+    } else if (field === 'substitute') {
+        playerItem.querySelector('.player-substitute').checked = value;
+    } else if (field === 'captain') {
+        playerItem.querySelector('.player-captain').checked = value;
     }
 }
 
 function setupEventListeners() {
     document.getElementById('homeAddPlayer').addEventListener('click', () => addPlayer('home'));
     document.getElementById('awayAddPlayer').addEventListener('click', () => addPlayer('away'));
-    document.getElementById('saveButton').removeEventListener('click', saveHandler); // Ensure no duplicate listener
-    document.getElementById('saveButton').addEventListener('click', saveHandler); // Attach the listener
+    document.getElementById('saveButton').addEventListener('click', saveHandler);
     document.getElementById('resetAwayTeam').addEventListener('click', resetAwayTeam);
     document.getElementById('resetHomePlayers').addEventListener('click', resetHomePlayers);
     document.getElementById('homePlayerNameSelect').addEventListener('change', updateHomePlayerNameInput);
@@ -158,7 +149,6 @@ function setupEventListeners() {
     document.getElementById('homeTeamLogo').addEventListener('input', () => updateLogoDisplay('home'));
     document.getElementById('awayTeamLogo').addEventListener('input', () => updateLogoDisplay('away'));
 
-    // Event delegation for drag and drop
     document.getElementById('homePlayerList').addEventListener('dragstart', handleDragStart);
     document.getElementById('homePlayerList').addEventListener('dragover', handleDragOver);
     document.getElementById('homePlayerList').addEventListener('drop', handleDrop);
@@ -183,19 +173,14 @@ function addPlayer(team) {
     numberInput.classList.remove('error');
 
     if (playerName && isValidNumber(playerNumber)) {
-        const listElement = document.getElementById(`${team}PlayerList`);
-        const index = listElement.children.length;
-        addPlayerToList(team, playerName, playerNumber, isSubstitute, isCaptain, index);
+        addPlayerToList(team, playerName, playerNumber, isSubstitute, isCaptain);
 
-        // After adding the player, reset inputs
         nameInput.value = '';
         numberInput.value = '';
         substituteInput.checked = false;
         if (captainInput) {
-            captainInput.checked = false; // Reset the captain input checkbox after adding the player
+            captainInput.checked = false;
         }
-
-        updatePlayerListOrder(listElement.id);  // Ensure correct ordering and event listeners
     } else {
         if (!isValidNumber(playerNumber)) {
             numberInput.classList.add('error');
@@ -216,7 +201,7 @@ function updateHomePlayerNameInput() {
 function updateLogoDisplay(team) {
     const logoUrl = document.getElementById(`${team}TeamLogo`).value;
     const logoImg = document.getElementById(`${team}TeamLogoImage`);
-    logoImg.src = logoUrl || 'placeholder.png'; // Use a placeholder image if URL is empty
+    logoImg.src = logoUrl || 'placeholder.png';
     logoImg.style.display = logoUrl ? 'block' : 'none';
 }
 
@@ -246,7 +231,7 @@ function resetAwayTeam() {
 }
 
 function saveRoster(event) {
-    event.preventDefault(); // Prevent default form submission
+    event.preventDefault();
 
     if (!validatePlayerNumbers()) {
         alert('Please enter a valid number for all players.');
@@ -345,14 +330,14 @@ function getPlayerData(team) {
 let draggedItem = null;
 
 function handleDragStart(e) {
-    draggedItem = e.target.closest('.player-item');  // Reference to the dragged item
+    draggedItem = e.target.closest('.player-item');
     e.dataTransfer.effectAllowed = 'move';
     e.dataTransfer.setData('text/html', draggedItem.innerHTML);
     draggedItem.classList.add('dragging');
 }
 
 function handleDragOver(e) {
-    e.preventDefault();  // Necessary to allow drop
+    e.preventDefault();
     const targetItem = e.target.closest('.player-item');
     if (targetItem && targetItem !== draggedItem) {
         targetItem.classList.add('drag-over');
@@ -361,15 +346,13 @@ function handleDragOver(e) {
 }
 
 function handleDrop(e) {
-    e.stopPropagation();  // Stops some browsers from redirecting
+    e.stopPropagation();
     const targetItem = e.target.closest('.player-item');
 
     if (draggedItem !== targetItem) {
-        // Move the dragged item to the new position
         const listElement = draggedItem.parentNode;
         listElement.insertBefore(draggedItem, targetItem);
 
-        // Update the data-index attributes after reordering
         updatePlayerListOrder(listElement.id);
     }
 
@@ -385,36 +368,9 @@ function updatePlayerListOrder(teamListId) {
     const listElement = document.getElementById(teamListId);
     const playerItems = listElement.querySelectorAll('.player-item');
 
-    playerItems.forEach((item, index) => {
-        item.setAttribute('data-index', index);
-        // Ensure all input elements have the correct data-index attributes
-        item.querySelectorAll('input, button').forEach(input => {
-            input.setAttribute('data-index', index);
-        });
-    });
-
-    // Reattach event listeners to delete buttons
-    listElement.querySelectorAll('.delete-player').forEach((button) => {
-        button.addEventListener('click', (e) => {
-            const itemToDelete = e.target.closest('.player-item');
-            listElement.removeChild(itemToDelete);
-            updatePlayerListOrder(teamListId); // Ensure order is updated after deletion
-        });
-    });
-
-    // Reattach event listeners for substitutes and captains
-    listElement.querySelectorAll('.player-substitute').forEach((checkbox) => {
-        checkbox.addEventListener('change', (e) => {
-            const index = parseInt(checkbox.getAttribute('data-index'));
-            updatePlayer(teamListId.replace('PlayerList', ''), index, 'substitute', e.target.checked);
-        });
-    });
-
-    listElement.querySelectorAll('.player-captain').forEach((checkbox) => {
-        checkbox.addEventListener('change', (e) => {
-            const index = parseInt(checkbox.getAttribute('data-index'));
-            handleCaptainSelection(e, teamListId.replace('PlayerList', ''), index);
-        });
+    playerItems.forEach((item) => {
+        // Reattach event listeners with updated order
+        attachPlayerEventListeners(item, teamListId.replace('PlayerList', ''));
     });
 }
 
@@ -447,35 +403,30 @@ function handleTouchEnd(e) {
 }
 
 function saveHandler(event) {
-    event.preventDefault();  // Prevent the default form submission
+    event.preventDefault();
 
     let valid = true;
 
-    // Check for exactly one captain in the home team
     const homeCaptains = document.querySelectorAll('#homePlayerList .player-captain:checked');
     if (homeCaptains.length !== 1) {
         alert('Please select exactly one captain for the Home team.');
         valid = false;
     }
 
-    // Check for exactly one captain in the away team
     const awayCaptains = document.querySelectorAll('#awayPlayerList .player-captain:checked');
     if (awayCaptains.length !== 1) {
         alert('Please select exactly one captain for the Away team.');
         valid = false;
     }
 
-    // Validate unique player numbers for both teams
     if (!validateUniquePlayerNumbers('home') || !validateUniquePlayerNumbers('away')) {
         valid = false;
     }
 
-    // Prevent saving if validation fails
     if (!valid) {
         console.log("Validation failed, not saving the roster.");
-        return;  // Exit the function to prevent saving
+        return;
     }
 
-    // If validation is successful, proceed with saving the roster
     saveRoster(event);
 }
