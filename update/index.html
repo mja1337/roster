@@ -47,6 +47,7 @@
         }
         .player-item {
             display: flex;
+	    flex-wrap: wrap; /* Allows items to wrap to the next line */
             align-items: center;
             margin-bottom: 10px;
             background-color: #222;
@@ -57,6 +58,8 @@
         .player-inputs input[type="text"]#homePlayerNumberInput,
         .player-inputs input[type="text"]#awayPlayerNumberInput {
             width: 60px; /* Smaller width for player number fields */
+	    flex: 1 1 100px; /* Flex properties to allow responsive behavior */
+            margin-bottom: 5px;
             margin-right: 10px; /* Space between number and name fields */
         }
         .player-item input[type="text"].player-name,
@@ -79,6 +82,11 @@
             width: auto;
             padding: 5px 10px;
         }
+	.player-item button.delete-player {
+            flex: 0 1 auto;
+            margin-left: auto; /* Keep delete button on the right */
+            margin-bottom: 5px;
+    	}
         .player-inputs {
             display: flex;
             align-items: center;
@@ -112,6 +120,16 @@
             margin: 10px auto;
             display: block;
             object-fit: contain;
+        }
+	    @media (max-width: 600px) {
+                .player-item {
+                flex-direction: column; /* Stack items vertically on small screens */
+                align-items: flex-start;
+        }
+
+            .player-item button.delete-player {
+                align-self: flex-end; /* Ensure delete button aligns to the right */
+            }
         }
     </style>
 </head>
